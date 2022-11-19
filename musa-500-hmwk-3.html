@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.247">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Minwook Kang, Ann Zhang, and Nissim Lebovits">
+<meta name="dcterms.date" content="2022-11-18">
+
+<title>Homework #3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="musa-500-hmwk-3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="musa-500-hmwk-3_files/libs/quarto-html/quarto.js"></script>
+<script src="musa-500-hmwk-3_files/libs/quarto-html/popper.min.js"></script>
+<script src="musa-500-hmwk-3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="musa-500-hmwk-3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="musa-500-hmwk-3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="musa-500-hmwk-3_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="musa-500-hmwk-3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="musa-500-hmwk-3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="musa-500-hmwk-3_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link" data-scroll-target="#the-problem">The Problem</a></li>
+  <li><a href="#initial-impressions" id="toc-initial-impressions" class="nav-link" data-scroll-target="#initial-impressions">Initial Impressions</a></li>
+  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">Tools</a></li>
+  </ul></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#issues-with-ols-regression" id="toc-issues-with-ols-regression" class="nav-link" data-scroll-target="#issues-with-ols-regression">Issues with OLS Regression</a></li>
+  <li><a href="#advantages-of-logistic-regression" id="toc-advantages-of-logistic-regression" class="nav-link" data-scroll-target="#advantages-of-logistic-regression">Advantages of Logistic Regression</a></li>
+  <li><a href="#hypotheses-for-each-predictor" id="toc-hypotheses-for-each-predictor" class="nav-link" data-scroll-target="#hypotheses-for-each-predictor">Hypotheses for Each Predictor</a></li>
+  <li><a href="#assessing-quality-of-model-fit" id="toc-assessing-quality-of-model-fit" class="nav-link" data-scroll-target="#assessing-quality-of-model-fit">Assessing Quality of Model Fit</a></li>
+  <li><a href="#assumptions-of-logistic-regression" id="toc-assumptions-of-logistic-regression" class="nav-link" data-scroll-target="#assumptions-of-logistic-regression">Assumptions of Logistic Regression</a></li>
+  <li><a href="#exploratory-analysis-prior-to-regression" id="toc-exploratory-analysis-prior-to-regression" class="nav-link" data-scroll-target="#exploratory-analysis-prior-to-regression">Exploratory Analysis Prior to Regression</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#findings-from-exploratory-analysis" id="toc-findings-from-exploratory-analysis" class="nav-link" data-scroll-target="#findings-from-exploratory-analysis">Findings from Exploratory Analysis</a></li>
+  <li><a href="#assumptions-of-logistic-regression-1" id="toc-assumptions-of-logistic-regression-1" class="nav-link" data-scroll-target="#assumptions-of-logistic-regression-1">Assumptions of Logistic Regression</a></li>
+  <li><a href="#logistic-regression-results" id="toc-logistic-regression-results" class="nav-link" data-scroll-target="#logistic-regression-results">Logistic Regression Results</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a>
+  <ul class="collapse">
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework #3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Minwook Kang, Ann Zhang, and Nissim Lebovits </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 18, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggthemr</span>(<span class="st">"pale"</span>) <span class="co">#set global ggplot theme</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>) <span class="co"># turn off scientific notation</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(aod)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rms)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gmodels)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_knit<span class="sc">$</span><span class="fu">set</span>(<span class="at">root.dir =</span> <span class="st">"C:/Users/Nissim/Desktop/Fall 2022/Spat Stats/Homeworks/musa-500-hmwk-3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="the-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-problem">The Problem</h3>
+<p>The goal of the current assignment is to identify predictors of accidents related to drunk driving. The data used in this assignment come from a data set containing all 53,260 car crashes in the City of Philadelphia for the years 2008 – 2012. The data set was compiled by the Pennsylvania Department of Transportation, and is made available to the public at OpenDataPhilly.org. In the past, Azavea, one of Philadelphia’s most prominent GIS software development firms, has used these data for a number of interesting analyses, which have been published on the company’s website.</p>
+<p>Because the crash data are geocoded, it is possible to spatially join the data to the 2000 Census block group level data set that was used for the two previous homework assignments. After the spatial join, each crash point contains the median household income and the percent of individuals with at least a bachelor’s degree in the block group where the crash took place.</p>
+<p>Even though the original data set has a total of 53,260 car crashes, for the sake of this assignment, we remove the 9,896 crash locations which took place in non-residential block groups, where median household income and vacancy rates are 0, from the data set. The final data set contains the 43,364 crashes that took place in Philadelphia’s residential block groups. Here, we will be regressing the binary dependent variable, DRINKING_D, on the following binary and continuous predictors: FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC.</p>
+</section>
+<section id="initial-impressions" class="level3">
+<h3 class="anchored" data-anchor-id="initial-impressions">Initial Impressions</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>crash_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"./HW 3/Logistic Regression Data.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">clean_names</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>drinking_d_table <span class="ot">=</span> <span class="fu">table</span>(crash_data<span class="sc">$</span>drinking_d)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(drinking_d_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        0         1 
+0.9426944 0.0573056 </code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>crosstab <span class="ot">=</span> <span class="cf">function</span>(a){</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  crosstab_list <span class="ot">=</span> <span class="fu">CrossTable</span>(crash_data<span class="sc">$</span>drinking_d, a)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(crosstab_list)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>crosstab_df <span class="ot">=</span> <span class="fu">map</span>(crash_data[<span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>], crosstab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+| Chi-square contribution |
+|           N / Row Total |
+|           N / Col Total |
+|         N / Table Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | a 
+crash_data$drinking_d |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     40879 |         0 |     40879 | 
+                      |   142.404 |  2342.596 |           | 
+                      |     1.000 |     0.000 |     0.943 | 
+                      |     1.000 |     0.000 |           | 
+                      |     0.943 |     0.000 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |         0 |      2485 |      2485 | 
+                      |  2342.596 | 38536.404 |           | 
+                      |     0.000 |     1.000 |     0.057 | 
+                      |     0.000 |     1.000 |           | 
+                      |     0.000 |     0.057 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     40879 |      2485 |     43364 | 
+                      |     0.943 |     0.057 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+| Chi-square contribution |
+|           N / Row Total |
+|           N / Col Total |
+|         N / Table Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | a 
+crash_data$drinking_d |         0 |         1 |         2 |         3 |         4 |         5 |         6 |         7 |         8 |         9 | Row Total | 
+----------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+                    0 |       391 |      8426 |      1747 |       148 |     14092 |      3006 |      1159 |      4184 |      7608 |       118 |     40879 | 
+                      |     0.106 |     0.649 |     3.418 |     0.024 |     4.530 |     5.417 |     1.220 |    19.157 |    17.178 |     0.078 |           | 
+                      |     0.010 |     0.206 |     0.043 |     0.004 |     0.345 |     0.074 |     0.028 |     0.102 |     0.186 |     0.003 |     0.943 | 
+                      |     0.958 |     0.934 |     0.902 |     0.955 |     0.960 |     0.904 |     0.913 |     0.881 |     0.989 |     0.967 |           | 
+                      |     0.009 |     0.194 |     0.040 |     0.003 |     0.325 |     0.069 |     0.027 |     0.096 |     0.175 |     0.003 |           | 
+----------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+                    1 |        17 |       591 |       190 |         7 |       591 |       321 |       111 |       565 |        88 |         4 |      2485 | 
+                      |     1.741 |    10.677 |    56.223 |     0.399 |    74.528 |    89.112 |    20.074 |   315.143 |   282.583 |     1.280 |           | 
+                      |     0.007 |     0.238 |     0.076 |     0.003 |     0.238 |     0.129 |     0.045 |     0.227 |     0.035 |     0.002 |     0.057 | 
+                      |     0.042 |     0.066 |     0.098 |     0.045 |     0.040 |     0.096 |     0.087 |     0.119 |     0.011 |     0.033 |           | 
+                      |     0.000 |     0.014 |     0.004 |     0.000 |     0.014 |     0.007 |     0.003 |     0.013 |     0.002 |     0.000 |           | 
+----------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+         Column Total |       408 |      9017 |      1937 |       155 |     14683 |      3327 |      1270 |      4749 |      7696 |       122 |     43364 | 
+                      |     0.009 |     0.208 |     0.045 |     0.004 |     0.339 |     0.077 |     0.029 |     0.110 |     0.177 |     0.003 |           | 
+----------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+
+ 
+
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+| Chi-square contribution |
+|           N / Row Total |
+|           N / Col Total |
+|         N / Table Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | a 
+crash_data$drinking_d |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     39698 |      1181 |     40879 | 
+                      |     0.303 |     9.299 |           | 
+                      |     0.971 |     0.029 |     0.943 | 
+                      |     0.945 |     0.863 |           | 
+                      |     0.915 |     0.027 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |      2297 |       188 |      2485 | 
+                      |     4.987 |   152.973 |           | 
+                      |     0.924 |     0.076 |     0.057 | 
+                      |     0.055 |     0.137 |           | 
+                      |     0.053 |     0.004 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     41995 |      1369 |     43364 | 
+                      |     0.968 |     0.032 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+| Chi-square contribution |
+|           N / Row Total |
+|           N / Col Total |
+|         N / Table Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | a 
+crash_data$drinking_d |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     40267 |       612 |     40879 | 
+                      |     0.117 |     6.919 |           | 
+                      |     0.985 |     0.015 |     0.943 | 
+                      |     0.944 |     0.848 |           | 
+                      |     0.929 |     0.014 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |      2375 |       110 |      2485 | 
+                      |     1.927 |   113.824 |           | 
+                      |     0.956 |     0.044 |     0.057 | 
+                      |     0.056 |     0.152 |           | 
+                      |     0.055 |     0.003 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     42642 |       722 |     43364 | 
+                      |     0.983 |     0.017 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+| Chi-square contribution |
+|           N / Row Total |
+|           N / Col Total |
+|         N / Table Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | a 
+crash_data$drinking_d |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     40453 |       426 |     40879 | 
+                      |     0.000 |     0.009 |           | 
+                      |     0.990 |     0.010 |     0.943 | 
+                      |     0.943 |     0.938 |           | 
+                      |     0.933 |     0.010 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |      2457 |        28 |      2485 | 
+                      |     0.002 |     0.151 |           | 
+                      |     0.989 |     0.011 |     0.057 | 
+                      |     0.057 |     0.062 |           | 
+                      |     0.057 |     0.001 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     42910 |       454 |     43364 | 
+                      |     0.990 |     0.010 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+| Chi-square contribution |
+|           N / Row Total |
+|           N / Col Total |
+|         N / Table Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | a 
+crash_data$drinking_d |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     39618 |      1261 |     40879 | 
+                      |     0.757 |    20.834 |           | 
+                      |     0.969 |     0.031 |     0.943 | 
+                      |     0.947 |     0.829 |           | 
+                      |     0.914 |     0.029 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |      2225 |       260 |      2485 | 
+                      |    12.458 |   342.731 |           | 
+                      |     0.895 |     0.105 |     0.057 | 
+                      |     0.053 |     0.171 |           | 
+                      |     0.051 |     0.006 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     41843 |      1521 |     43364 | 
+                      |     0.965 |     0.035 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+| Chi-square contribution |
+|           N / Row Total |
+|           N / Col Total |
+|         N / Table Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | a 
+crash_data$drinking_d |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     22357 |     18522 |     40879 | 
+                      |     1.737 |     2.137 |           | 
+                      |     0.547 |     0.453 |     0.943 | 
+                      |     0.934 |     0.953 |           | 
+                      |     0.516 |     0.427 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |      1569 |       916 |      2485 | 
+                      |    28.566 |    35.162 |           | 
+                      |     0.631 |     0.369 |     0.057 | 
+                      |     0.066 |     0.047 |           | 
+                      |     0.036 |     0.021 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     23926 |     19438 |     43364 | 
+                      |     0.552 |     0.448 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+| Chi-square contribution |
+|           N / Row Total |
+|           N / Col Total |
+|         N / Table Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | a 
+crash_data$drinking_d |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     40205 |       674 |     40879 | 
+                      |     0.019 |     1.153 |           | 
+                      |     0.984 |     0.016 |     0.943 | 
+                      |     0.942 |     0.983 |           | 
+                      |     0.927 |     0.016 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |      2473 |        12 |      2485 | 
+                      |     0.305 |    18.975 |           | 
+                      |     0.995 |     0.005 |     0.057 | 
+                      |     0.058 |     0.017 |           | 
+                      |     0.057 |     0.000 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     42678 |       686 |     43364 | 
+                      |     0.984 |     0.016 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+| Chi-square contribution |
+|           N / Row Total |
+|           N / Col Total |
+|         N / Table Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | a 
+crash_data$drinking_d |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     36642 |      4237 |     40879 | 
+                      |     0.464 |     4.155 |           | 
+                      |     0.896 |     0.104 |     0.943 | 
+                      |     0.939 |     0.973 |           | 
+                      |     0.845 |     0.098 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |      2366 |       119 |      2485 | 
+                      |     7.633 |    68.353 |           | 
+                      |     0.952 |     0.048 |     0.057 | 
+                      |     0.061 |     0.027 |           | 
+                      |     0.055 |     0.003 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     39008 |      4356 |     43364 | 
+                      |     0.900 |     0.100 |           | 
+----------------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>crosstab_df[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   y
+x       0     1
+  0 40879     0
+  1     0  2485</code></pre>
+</div>
+</div>
+</section>
+<section id="tools" class="level3">
+<h3 class="anchored" data-anchor-id="tools">Tools</h3>
+</section>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<section id="issues-with-ols-regression" class="level3">
+<h3 class="anchored" data-anchor-id="issues-with-ols-regression">Issues with OLS Regression</h3>
+<p>Recall the assumptions of OLS: Independence of observations Linear relationship between DV and each predictor Normality of residuals Homoscedasticity No multicollinearity</p>
+</section>
+<section id="advantages-of-logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-of-logistic-regression">Advantages of Logistic Regression</h3>
+<p>Assumptions of Logistic Regression DV must be binary Independence of observations No severe multicollinearity Larger samples are needed than for linear regression because MLE (and not least squares) is used to estimate regression coefficients. You need at least 50 observations per predictor (compared to about 10 per predictor in OLS regression) But in Logistic Regression There’s no assumption that there needs to be a linear relationship between DV and each IV No assumption of homoscedasticity Residuals don’t need to be normal</p>
+</section>
+<section id="hypotheses-for-each-predictor" class="level3">
+<h3 class="anchored" data-anchor-id="hypotheses-for-each-predictor">Hypotheses for Each Predictor</h3>
+</section>
+<section id="assessing-quality-of-model-fit" class="level3">
+<h3 class="anchored" data-anchor-id="assessing-quality-of-model-fit">Assessing Quality of Model Fit</h3>
+</section>
+<section id="assumptions-of-logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-of-logistic-regression">Assumptions of Logistic Regression</h3>
+</section>
+<section id="exploratory-analysis-prior-to-regression" class="level3">
+<h3 class="anchored" data-anchor-id="exploratory-analysis-prior-to-regression">Exploratory Analysis Prior to Regression</h3>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<section id="findings-from-exploratory-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="findings-from-exploratory-analysis">Findings from Exploratory Analysis</h3>
+</section>
+<section id="assumptions-of-logistic-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-of-logistic-regression-1">Assumptions of Logistic Regression</h3>
+</section>
+<section id="logistic-regression-results" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression-results">Logistic Regression Results</h3>
+<p>We can also say that a 1 unit increase in the predictor corresponds to a 〖(𝑒〗^(𝛽_1 )−1)∗100% change in the odds of Y=1. In the current example, we could say that when Population increases by 1 person, the odds of there being a hospital in the zip code goes up by (1.001−1)∗100%=0.1%.</p>
+<p>What if 𝛽_1&lt;0 (i.e., there’s a negative association between the dependent variable and the predictor)? In our example above, if 𝛽_1=−0.1, we could say that the odds of there being a hospital in a zip code changes (i.e., decreases) by a factor of 𝑒^(𝛽_1 )=𝑒^(−0.1)=0.9 as population increases by 1.</p>
+<p>What happens when 𝛽_1=0? Intuitively, it means that the predictor has no effect on the dependent variable. (Later we will see that this corresponds to an odds ratio of 𝑒^0=1.)</p>
+<p>The higher the R-Squared, the better</p>
+<p>Unlike OLS regression, R-Squared cannot be interpreted as the % of variance explained by the model</p>
+<p>You can choose a cut-off value by looking at the histogram of ̂y_𝑖</p>
+<p>Many statisticians use a bunch of cut-off values for what’s a relatively high and relatively low probability. These values are often:</p>
+<p>For now, we’ll stick with a cutoff of 0.5</p>
+<p>Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is&nbsp;complementary&nbsp;to the&nbsp;false negative rate.</p>
+<p>Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the&nbsp;false positive rate.</p>
+<p>ROC Curves</p>
+<p>A way to plot true positive rate (sensitivity) against false positive rate (i.e., 1 - specificity) A best cut-off value may be determined by optimizing sensitivity and specificity We can also use ROC curves to examine predictive quality of the model</p>
+<p>A couple different ways for identifying the probability cut-offs based on ROC Curves exist: Youden Index: A cut-off for which (Sensitivity + Specificity) is maximized A cut-off for which the ROC curve has the minimum distance from the upper left corner of the graph – i.e., the point at which specificity = 1 and sensitivity = 1. This is just a different way of maximizing specificity and sensitivity We can implement this in R and get the optimal cut-off point and corresponding sensitivity and specificity</p>
+<p>Area under ROC Curve (AUC, which stands for Area Under Curve) is a measure of prediction accuracy of the model (how well a model predicts 1 responses as 1’s and 0 responses as 0’s). Higher AUCs mean that we can find a cut-off value for which both sensitivity and specificity of the model are relatively high. Possible values range between 0.5 (area under 45 degree line) and 1 (area of the entire box). A rough guide for classifying the accuracy: .90-1 = excellent .80-.90 = good .70-.80 = fair .60-.70 = poor .50-.60 = fail These might be somewhat conservative estimates, and there will be statisticians who will say that area &gt; .7 is just fine.</p>
+<p>Interpreting the AUC AUC may be interpreted as the probability that the model correctly ranks two randomly selected observations where one has 𝑦=1 and the other one has 𝑦=0. In other words, imagine that you randomly select 2 observations: Observation 1, for which 𝑦=1, and Observation 2, for which 𝑦=0. Recall that for each one of these observations, your logistic regression model estimates 𝑦̂=𝑝=𝑃(𝑦=1) The AUC may be interpreted as the probability that the 𝑦̂ for observation 1 (where 𝑦=1) will be higher than the 𝑦̂ for observation 2 (where 𝑦=0). An example: An AUC of .93397 means that, if you have 2 randomly selected zip codes, such that the first has a hospital and the second doesn’t, 93.397% of the time the 𝑦̂ (i.e., the predicted probability of there being a hospital) in the first zip code will be higher than the 𝑦̂ in the second zip code.</p>
+<p>Similar to OLS, we can do cross-validation to determine a quality of the model. See following links for more information: K-Fold cross-validation in R: https://www.r-bloggers.com/evaluating-logistic-regression-models/ More on cross-validation in R: https://www.r-bloggers.com/predicting-creditability-using-logistic-regression-in-r-cross-validating-the-classifier-part-2-2/</p>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<section id="recap" class="level3">
+<h3 class="anchored" data-anchor-id="recap">Recap</h3>
+</section>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,175 @@
+---
+title: "MUSA 500, Homework #3"
+author: "Minwook Kang, Ann Zhang, and Nissim Lebovits"
+date: today
+format: 
+  html:
+    toc: true
+    theme: flatly
+    code-fold: true
+    code-summary: "Show the code"
+editor: visual
+execute:
+  warning: false
+  error: false
+  messages: false
+project:
+  type: website
+  output-dir: docs
+---
+
+```{r setup}
+library(tidyverse)
+library(sf)
+library(janitor)
+library(ggthemr)
+library(ggpubr)
+library(ggrepel)
+library(purrr)
+
+ggthemr("pale") #set global ggplot theme
+options(scipen = 999) # turn off scientific notation
+
+library(aod)
+library(rms)
+library(gmodels)
+
+knitr::opts_knit$set(root.dir = "C:/Users/Nissim/Desktop/Fall 2022/Spat Stats/Homeworks/musa-500-hmwk-3")
+```
+
+## Introduction
+
+### The Problem
+The goal of the current assignment is to identify predictors of accidents related to drunk driving. The data used in this assignment come from a data set containing all 53,260 car crashes in the City of Philadelphia for the years 2008 – 2012. The data set was compiled by the Pennsylvania Department of Transportation, and is made available to the public at OpenDataPhilly.org. In the past, Azavea, one of Philadelphia’s most prominent GIS software development firms, has used these data for a number of interesting analyses, which have been published on the company’s website.
+
+Because the crash data are geocoded, it is possible to spatially join the data to the 2000 Census block group level data set that was used for the two previous homework assignments. After the spatial join, each crash point contains the median household income and the percent of individuals with at least a bachelor’s degree in the block group where the crash took place.
+
+Even though the original data set has a total of 53,260 car crashes, for the sake of this assignment, we remove the 9,896 crash locations which took place in non-residential block groups, where median household income and vacancy rates are 0, from the data set. The final data set contains the 43,364 crashes that took place in Philadelphia’s residential block groups.
+Here, we will be regressing the binary dependent variable, DRINKING_D, on the following binary and continuous predictors: FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC.
+
+### Initial Impressions
+```{r data import}
+crash_data = read.csv("./HW 3/Logistic Regression Data.csv") |>
+              clean_names()
+
+drinking_d_table = table(crash_data$drinking_d)
+
+prop.table(drinking_d_table)
+```
+
+```{r cross tabs}
+crosstab = function(a){
+  crosstab_list = CrossTable(crash_data$drinking_d, a)
+    return(crosstab_list)
+}
+
+crosstab_df = map(crash_data[2:10], crosstab)
+
+crosstab_df[[1]][[1]]
+```
+
+### Tools
+
+## Methods
+
+### Issues with OLS Regression
+Recall the assumptions of OLS:
+Independence of observations
+Linear relationship between DV and each predictor
+Normality of residuals
+Homoscedasticity
+No multicollinearity
+
+
+### Advantages of Logistic Regression
+Assumptions of Logistic Regression
+DV must be binary
+Independence of observations
+No severe multicollinearity
+Larger samples are needed than for linear regression because MLE (and not least squares) is used to estimate regression coefficients.
+You need at least 50 observations per predictor (compared to about 10 per predictor in OLS regression)
+But in Logistic Regression
+There’s no assumption that there needs to be a linear relationship between DV and each IV
+No assumption of homoscedasticity
+Residuals don’t need to be normal
+
+
+
+### Hypotheses for Each Predictor
+
+### Assessing Quality of Model Fit
+
+### Assumptions of Logistic Regression
+
+### Exploratory Analysis Prior to Regression
+
+## Results
+
+### Findings from Exploratory Analysis
+
+### Assumptions of Logistic Regression
+
+### Logistic Regression Results
+We can also say that a 1 unit increase in the predictor corresponds to a 〖(𝑒〗^(𝛽_1 )−1)∗100% change in the odds of Y=1. In the current example, we could say that when Population increases by 1 person, the odds of there being a hospital in the zip code goes up by (1.001−1)∗100%=0.1%.
+
+What if 𝛽_1<0 (i.e., there’s a negative association between the dependent variable and the predictor)? In our example above, if 𝛽_1=−0.1, we could say that the odds of there being a hospital in a zip code changes (i.e., decreases) by a factor of 𝑒^(𝛽_1 )=𝑒^(−0.1)=0.9 as population increases by 1.
+
+What happens when 𝛽_1=0? Intuitively, it means that the predictor has no effect on the dependent variable. (Later we will see that this corresponds to an odds ratio of 𝑒^0=1.)
+
+The higher the R-Squared, the better
+
+Unlike OLS regression, R-Squared cannot be interpreted as the % of variance explained by the model
+
+You can choose a cut-off value by looking at the histogram of ̂y_𝑖
+
+Many statisticians use a bunch of cut-off values for what’s a relatively high and relatively low probability. These values are often:
+
+For now, we'll stick with a cutoff of 0.5
+
+Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate.
+
+Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate.
+
+ROC Curves
+
+A way to plot true positive rate (sensitivity) against false positive rate (i.e.,            1 - specificity)
+A best cut-off value may be determined by optimizing sensitivity and specificity
+We can also use ROC curves to examine predictive quality of the model
+
+A couple different ways for identifying the probability cut-offs based on ROC Curves exist:
+ Youden Index: A cut-off for which (Sensitivity + Specificity) is maximized
+A cut-off for which the ROC curve has the minimum distance from the upper left corner of the graph – i.e., the point at which specificity = 1 and sensitivity = 1. 
+This is just a different way of maximizing specificity and sensitivity
+We can implement this in R and get the optimal cut-off point and corresponding sensitivity and specificity
+
+Area under ROC Curve (AUC, which stands for Area Under Curve) is a measure of prediction accuracy of the model (how well a model predicts 1 responses as 1’s and 0 responses as 0’s).
+Higher AUCs mean that we can find a cut-off value for which both sensitivity and specificity of the model are relatively high.
+Possible values range between 0.5 (area under 45 degree line) and 1 (area of the entire box).
+A rough guide for classifying the accuracy:
+.90-1 = excellent
+.80-.90 = good
+.70-.80 = fair
+.60-.70 = poor
+.50-.60 = fail
+These might be somewhat conservative estimates, and there will be statisticians who will say that area > .7 is just fine.
+
+Interpreting the AUC
+AUC may be interpreted as the probability that the model correctly ranks two randomly selected observations where one has 𝑦=1 and the other one has 𝑦=0. 
+In other words, imagine that you randomly select 2 observations:
+Observation 1, for which 𝑦=1, and 
+Observation 2, for which 𝑦=0. 
+Recall that for each one of these observations, your logistic regression model estimates 𝑦̂=𝑝=𝑃(𝑦=1)
+The AUC may be interpreted as the probability that the 𝑦̂ for observation 1 (where 𝑦=1) will be higher than the 𝑦̂ for observation 2 (where 𝑦=0).
+An example: An AUC of .93397 means that, if you have 2 randomly selected zip codes, such that the first has a hospital and the second doesn’t, 93.397% of the time the 𝑦̂ (i.e.,  the predicted probability of there being a hospital) in the first zip code will be higher than the 𝑦̂ in the second zip code.
+
+Similar to OLS, we can do cross-validation to determine a quality of the model.
+See following links for more information:
+K-Fold cross-validation in R: https://www.r-bloggers.com/evaluating-logistic-regression-models/
+More on cross-validation in R: https://www.r-bloggers.com/predicting-creditability-using-logistic-regression-in-r-cross-validating-the-classifier-part-2-2/
+
+
+## Discussion
+
+### Recap
+
+### Limitations
