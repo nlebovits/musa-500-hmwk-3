@@ -1,0 +1,485 @@
+---
+title: "MUSA 500, Homework #3"
+author: "Minwook Kang, Ann Zhang, and Nissim Lebovits"
+date: today
+title-block-banner: "#18bc9c"
+title-block-banner-color: "white"
+format: 
+  html:
+    toc: true
+    theme: flatly
+    code-fold: true
+    code-summary: "Show the code"
+editor: visual
+execute:
+  warning: false
+  error: false
+  messages: false
+project:
+  type: website
+  output-dir: docs
+---
+
+```{r setup}
+library(tidyverse)
+library(sf)
+library(janitor)
+#library(ggthemr) # mincomment : its not working on my pc
+library(ggpubr)
+library(ggrepel)
+library(purrr)
+#install.packages("kableExtra")
+library(kableExtra)
+library(caret)
+library(corrplot)
+# install.packages("prediction")
+library(prediction)
+
+#ggthemr("pale") #set global ggplot theme
+options(scipen = 999) # turn off scientific notation
+
+library(aod)
+library(rms)
+library(gmodels)
+
+#knitr::opts_knit$set(root.dir = "C:/Users/Nissim/Desktop/Fall 2022/Spat Stats/Homeworks/musa-500-hmwk-3")
+
+#import data
+crash_data = read.csv("https://github.com/kmu973/tempDataRepo/raw/main/Logistic%20Regression%20Data.csv") |>
+              clean_names()
+
+
+```
+
+
+## Introduction
+
+### The Problem
+
+The goal of the current assignment is to identify predictors of accidents related to drunk driving. The data used in this assignment come from a data set containing all 53,260 car crashes in the City of Philadelphia for the years 2008 -- 2012. The data set was compiled by the Pennsylvania Department of Transportation, and is made available to the public at OpenDataPhilly.org. In the past, Azavea, one of Philadelphia's most prominent GIS software development firms, has used these data for a number of interesting analyses, which have been published on the company's website.
+
+Because the crash data are geocoded, it is possible to spatially join the data to the 2000 Census block group level data set that was used for the two previous homework assignments. After the spatial join, each crash point contains the median household income and the percent of individuals with at least a bachelor's degree in the block group where the crash took place.
+
+Even though the original data set has a total of 53,260 car crashes, for the sake of this assignment, we remove the 9,896 crash locations which took place in non-residential block groups, where median household income and vacancy rates are 0, from the data set. The final data set contains the 43,364 crashes that took place in Philadelphia's residential block groups. Here, we will be regressing the binary dependent variable, DRINKING_D, on the following binary and continuous predictors: FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC.
+
+### Tools
+
+## Methods
+
+### Issues with OLS Regression
+
+Let's begin by recalling the five assumptions of OLS regression:
+
+ 1. A linear relationship between the dependent variable and predictors
+ 2. Normality of residuals
+ 3. Homoscedasticity
+ 4. Independence of observations (no spatial, temporal or other forms of dependence in the data)
+ 5. No multicollinearity
+
+Additionally, OLS regression relies on continuous variables. In this assignment,
+we are dealing with binary variables as well as continuous variables, so regular
+OLS regression is inappropriate.
+
+### Logistic Regression
+
+#### Assumptions of Logistic Regression
+
+Instead of OLS regression, we will use an approach known as logistic regression.
+The assumptions of logistic regression are similar to the assumptions in OLS regression,
+but not identical. In logistic regression:
+
+ 1. The dependent variable must be binary
+ 2. Observations must be independent
+ 3. There must not be multicollinearity
+
+We will also need a larger sample size than in OLS because in logistic regression
+we rely on maximum likelihood estimation. Logistic regression also differs from OLS
+in that:
+
+ 1. There's no assumption of a linear relationship between the DV and each IV
+ 2. There's no assumption of hetereoscedasticity
+ 3. Residuals do not need to be normally distributed
+
+#### Odds and Odds Ratios
+
+In order to understand logistic regression, we must first review the concept of
+*odds*.
+
+Odds are similar to probability. However, while probability may be calculated
+as $\frac{\text{\# desirable outcomes}}{\text{\# possible outcomes}}$, odds are 
+calculated as $\frac{\text{\# desirable outcomes}}{\text{\# undesirable outcomes}}$.
+
+The log odds that $Y = 1$ (or the *logit*) are simply $ln(Odds(Y = 1))$. In other words,
+if $Y$ is our dependent variable and $X$ is our independent variable, a 1-unit
+increase in $X$ means that the odds that $Y=1$ go up by $e^\text{ln(Odds(Y = 1))}$.
+
+The *odds ratio* is the ratio of the odds of one outcome for our binary dependent
+variable versus the other possible outcome, or $\frac{\text{Odds(Y=1)}}{\text{Odds(Y=0)}}$. It can also be calculated by exponentiating
+the coefficient of the independent variable in question. The odds ratio indicates
+how much more likely we are to see $Y=1$ than $Y=0$, e.g., an odds ratio of 3
+means that it is 3 times more likely that $Y=1$ than that $Y=0$.^[Sperandei S. Understanding logistic regression analysis. Biochem Med (Zagreb). 2014 Feb 15;24(1):12-8. doi: 10.11613/BM.2014.003. PMID: 24627710; PMCID: PMC3936971.] Rather than looking at the estimated $\beta$ coefficients, most statisticians prefer to look at odds ratios
+
+#### Equation for the Logistic Regression and Multivariate Logistic Regression
+
+For logistic regression with a single predictor, the equation is $$ln(\frac{p}{1-p}) = \beta_0 + \beta_1X_1 + \epsilon$$
+
+where $p = P(Y=1)$,
+
+$\frac{p}{1-p}$ are the odds,
+
+and $ln(\frac{p}{1-p})$ are the log odds, or logit.
+
+Solving algebraically, we come to the *inverse logit* or *logistic* function for logistic regression with one variable: $$p = \frac{e^{\beta_0+\beta_1X_1}}{1+e^{\beta_0+\beta_1X_1}} = \frac{1}{1+e^{-\beta_0-\beta_1X_1}}$$
+
+For multivariate logistic regression with $n$ predictors, that equation becomes $$p = \frac{e^{\beta_0+\beta_1X_1+\beta_2X_2+...+\beta_nX_n}}{1+e^{\beta_0+\beta_1X_1+\beta_2X_2+...+\beta_nX_n}}$$
+
+### Interpretation and Hypotheses for Each Predictor
+
+As explained above, we can say that $e^{\beta_1}$ is the extent to which the odds of $Y=1$ change as the predictor (i.e., Population) increases by 1 unit. So, when $e^{\beta_1} = 1.001$, 1.001 is the extent to which the odds that $Y=1$ go up as the independent variable $X$ increases by 1 unit. If we want to examine the extent to which the odds that $Y=1$ change as X increases by 100 units, we can simply raise $e$ to $100*\beta_1$, so $e^{100*\beta_1}$. If $\beta_1 < 0$, we would say that the odds that $Y=1$ *decrease* by a factor of $e^{\beta_1}$ as X *increases* by 1 unit. If $\beta_1 = 0$, then the predictor has *no effect* on the dependent variable.
+
+For each predictor $X_i$: 
+
+ - $H_0:\beta_i = 0 \hspace{1mm} (OR_i = 1)$
+ - $H_a:\beta_i \neq 0 \hspace{1mm} (OR_i \neq 1)$
+ 
+Within the context of logistic regression, the z-score is equal to $\frac{\hat{\beta_i}}{\sigma\hat{\beta_i}}$, which is normally distributed. This is also sometimes known as the *Wald statistic*, and yields a p-value for each term in the regression using the standard normal (z) tables and in the R output.
+
+### Assessing Quality of Model Fit
+
+With logistic regression, it is possible to calculate an $R^2$ value and, generally speaking, the higher the $R^2$, the better. However, this value is rarely used, as it cannot be interpreted as the percent of variance that is explained by the model.
+
+Instead, we can use the Akaike Information Criterion to compare models. The AIC estimates prediction error, and therefore the quality of our model, and includes a penality that "is an increasing function of the number of estimated parameters".^[https://en.wikipedia.org/wiki/Akaike_information_criterion]  When comparing multiple models, "the one with the minimum AIC value assures a good balance of goodness of fit and complexity".^[https://www.sciencedirect.com/topics/social-sciences/akaike-information-criterion]
+
+Finally, in assessing the quality of our model, we can consider *specificity*, *sensitivity*, and the *misclassification rate*.
+
+Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate. Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate. The misclassification rate is the proportion of the sum of false positives and false negatives out of the total number of observations in the sample.
+
+To assess the quality of our model using these three measures, we can plot the true positive rate (sensitivity) against the false positive rate (specificity), as in Figure 1. Ideally, we want to see a high true positive rate and a low false positive rate. 
+
+![Figure 1: ROC Curve Example](File:Roccurves.png)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic#/media)
+
+
+-   iii. Explain what is meant by specificity, sensitivity and the misclassification rate, and describe how each quantity is calculated. Are higher or lower values of each quantity better or worse? In your explanation, be sure to mention about how fitted (predicted) values of y, i.e., y ̂, are calculated and interpreted in logistic regression.  Indicate why you should try using different cut-offs for what is considered a “high” probability of Y=1 when calculating the specificity, sensitivity and the misclassification rate.  Explain what the ROC curve is. Be sure to talk about some methods for calculating the optimal cut-off using the ROC curve, and specify which one you will be using in this report. Also, explain what we get by calculating the area under the ROC curve, and what might be value ranges for excellent, good, fair, poor and failing models.
+
+### Exploratory Analysis Prior to Regression
+
+-   i.  Talk about running the cross-tabulations between the dependent variable and binary predictors to see whether there is an association between the two variables. 1. Say that the appropriate statistical test for examining the association between two categorical variables is the Chi-Square test (described above on pp. 4-5 of this document). a. Be sure to mention the null and alternative hypotheses for the test.
+
+-   ii. Also state that we can compare the means of continuous predictors for both values of the dependent variable. 1. Say that the independent samples t-tests (described above on pp. 5-6 of this document) are the appropriate statistical tests for examining whether there were significant differences in mean values of PCTBACHMOR and MEDHHINC for crashes that involved alcohol and those that didn't. a. Mention the null and alternative hypotheses for the t-test.
+
+## Results
+
+### Findings from Exploratory Analysis
+
+-  i.  Present the tabulation of the dependent variable and comment on the number and proportion of crashes that involves drunk driving.
+
+
+```{r dependent variable}
+
+drinking_d_table = table(crash_data$drinking_d)
+prop.table(drinking_d_table)
+
+as.data.frame(drinking_d_table)
+as.data.frame(prop.table(drinking_d_table))
+
+DV_table <- left_join(as.data.frame(drinking_d_table), as.data.frame(prop.table(drinking_d_table)), by = "Var1") %>%
+  mutate(Var1 = case_when(Var1 == 0 ~ "Non-drunk",
+                          Var1 == 1 ~ "Drunk"),
+         Freq.y = round(Freq.y, 3))
+
+DV_table
+
+kable(DV_table, caption = "<center><span style='font-size:14px; color:black; font-family: Arial'>Table 2-1-1. tabulation of the dependent variable</span></center>",
+      col.names = c("Driver Status", "Count", "Proportion"), align = "c") %>% 
+    kable_minimal(full_width = T, html_font = "Arial", font_size = 14) %>%
+    row_spec(0:2, extra_css = "line-height: 30px")
+
+```
+
+
+-   ii. Present the cross-tabulation of the dependent variable with each of the binary predictors (table on p. 4 above). 1. In the table, add (an) extra column(s) which presents the results of the Chi-Square test (you may present the p-value only, or the Chi-Square statistic, the degrees of freedom and the p-value).
+
+
+```{r cross-tabulation}
+
+CrossTable(crash_data$fatal_or_m, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+CrossTable(crash_data$overturned, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+CrossTable(crash_data$cell_phone, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+CrossTable(crash_data$speeding, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+CrossTable(crash_data$aggressive, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+CrossTable(crash_data$driver1617, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+CrossTable(crash_data$driver65plus, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+
+```
+
+
+-2. Discuss whether the Chi-Square test shows that there is a significant association between the dependent variable and each of the binary predictors (i.e., can you reject the Null Hypothesis?).
+
+<!--writings-->
+
+-  iii. Present the means of the continuous predictors for both values of the dependent variable (table on p. 5). 1. In the table, add an extra column which presents the results of the independent samples t-test (you may present the p-value only, or the t-statistic, the degrees of freedom and the p-value).
+
+
+```{r means by group}
+
+tapply(crash_data$pctbachmor, crash_data$drinking_d, mean)
+tapply(crash_data$pctbachmor, crash_data$drinking_d, sd)
+
+tapply(crash_data$medhhinc, crash_data$drinking_d, mean)
+tapply(crash_data$medhhinc, crash_data$drinking_d, sd)
+
+t.test(crash_data$pctbachmor~crash_data$drinking_d)
+t.test(crash_data$medhhinc~crash_data$drinking_d)
+
+```
+
+
+-  2.  Discuss whether the t-test shows that there is a significant association between the dependent variable and each of the continuous predictors (i.e., can you reject the Null Hypothesis?).
+
+<!--writings-->
+
+### Assumptions of Logistic Regression
+
+-  i.  In particular, be sure to present the matrix showing the pairwise Pearson correlations for all the binary and continuous predictors. 1. Comment on any potential limitations of using Pearson correlations to measure the associations between binary predictors.
+
+
+```{r multicollinearlity check}
+
+#3-a multicollinearlity test
+
+correlation <- crash_data[c(4:10, 12:13)]
+cor(correlation, method = "pearson")
+
+mc_test <- cor(correlation,use="pairwise.complete.obs")
+corrplot(mc_test, method = "square",type = "lower",tl.cex = 0.5)
+
+```
+
+
+2.  State whether there is evidence of multicollinearity, and remind the reader how you're defining multicollinearity.
+
+<!--writings-->
+
+### Logistic Regression Results
+
+-  i.  First, present the results of the logistic regression with all predictors (FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC).
+
+
+```{r regression model}
+
+#3-a 
+
+logit <- glm(drinking_d ~ fatal_or_m + overturned + cell_phone + speeding + aggressive + driver1617 + driver65plus
+             + pctbachmor + medhhinc, data = crash_data, family = "binomial")
+summary(logit)
+
+exp(cbind(OR = coef(logit), confint(logit)))
+
+logitoutput <- summary(logit)
+logitcoeffs <- logitoutput$coefficients
+logitcoeffs
+
+or_ci <- exp(cbind(OR = coef(logit), confint(logit)))
+
+finallogitoutput <- cbind(logitcoeffs, or_ci)
+finallogitoutput
+
+```
+
+
+- 1.  Interpret the results. Be sure to comment on whether each predictor is significant, and interpret the odds ratio for each predictor.
+
+<!--writings-->
+
+- 2.  State whether there is evidence of multicollinearity, and remind the reader how you're defining multicollinearity.
+
+<!--writings-->
+
+- ii. Using the table on page 7, present the specificity, sensitivity and the misclassification rates for the different probability cut-offs. Indicate the cut-offs which yield the lowest/highest misclassification rates.
+
+
+```{r sensitivity, specificity}
+
+fit <- logit$fitted.values
+
+fit.binary = (fit>=0.02)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+fit.binary = (fit>=0.03)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+fit.binary = (fit>=0.05)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+fit.binary = (fit>=0.07)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+fit.binary = (fit>=0.08)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+fit.binary = (fit>=0.09)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+fit.binary = (fit>=0.1)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+fit.binary = (fit>=0.15)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+fit.binary = (fit>=0.2)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+fit.binary = (fit>=0.5)
+CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+```
+
+
+- iii. Present the ROC curve and comment on the optimal cut-off rate that was selected by minimizing the distance from the upper left corner of the ROC curve.
+
+1.  Compare this cut-off rate with the optimal rate in 3.c.ii above
+
+
+```{=html}
+<!-- -->
+```
+
+a.  Keep in mind that in 3.c.ii, we're looking at minimum mis-classification rates, and here, we're looking at simultaneously minimizing both sensitivity and specificity.
+
+
+```{r ROC}
+
+#3-a 
+
+#install.packages("ROCR")
+library(ROCR)
+
+a <- cbind(crash_data$drinking_d, fit)
+colnames(a) <- c("labels", "predictions")
+head(a)
+roc <- as.data.frame(a)
+pred <- ROCR::prediction(roc$predictions, roc$labels)
+roc.perf = performance(pred, measure = "tpr", x.measure = "fpr")
+plot(roc.perf)
+abline(a = 0, b = 1)
+
+
+```
+
+```{r optimal cutoff}
+
+#3-a 
+
+opt.cut = function(perf, pred){
+  cut.ind = mapply(FUN=function(x, y, p){
+    d = (x - 0)^2 + (y-1)^2
+    ind = which(d == min(d))
+    c(sensitivity = y[[ind]], specificity = 1-x[[ind]], 
+      cutoff = p[[ind]])
+  }, perf@x.values, perf@y.values, pred@cutoffs)
+}
+
+print(opt.cut(roc.perf, pred))
+
+```
+
+
+- iv. Also present and comment on the area under the ROC curve. What does it tell us about our model?
+
+
+```{r calculate AUC}
+
+#3-a 
+
+auc.perf = performance(pred, measure ="auc")
+auc.perf@y.values
+
+```
+
+
+- v.  Finally, present the results of the logistic regression with the binary predictors only (i.e., without PCTBACHMOR and MEDHHINC). 1. Compare the results of this regression with the results of the first regression: are there any predictors which are significant in the new model which weren't significant in the original one, or vice versa?
+
+
+```{r regression model2}
+
+#3-a 
+
+logit2 <- glm(drinking_d ~ fatal_or_m + overturned + cell_phone + speeding + aggressive + driver1617 + driver65plus
+            , data = crash_data, family = "binomial")
+
+summary(logit2)
+
+exp(cbind(OR = coef(logit2), confint(logit2)))
+
+logitoutput2 <- summary(logit2)
+logitcoeffs2 <- logitoutput2$coefficients
+logitcoeffs2
+
+or_ci2 <- exp(cbind(OR = coef(logit2), confint(logit2)))
+
+finallogitoutput2 <- cbind(logitcoeffs2, or_ci2)
+finallogitoutput2
+
+```
+
+
+2.  Be sure to also present the Akaike Information Criterion (AIC) for both models and indicate which model is better.
+
+
+```{r AIC}
+
+AIC(logit, logit2)
+
+```
+
+
+We can also say that a 1 unit increase in the predictor corresponds to a 〖(𝑒〗\^(𝛽_1 )−1)∗100% change in the odds of Y=1. In the current example, we could say that when Population increases by 1 person, the odds of there being a hospital in the zip code goes up by (1.001−1)∗100%=0.1%.
+
+What if 𝛽_1\<0 (i.e., there's a negative association between the dependent variable and the predictor)? In our example above, if 𝛽_1=−0.1, we could say that the odds of there being a hospital in a zip code changes (i.e., decreases) by a factor of 𝑒\^(𝛽_1 )=𝑒\^(−0.1)=0.9 as population increases by 1.
+
+What happens when 𝛽_1=0? Intuitively, it means that the predictor has no effect on the dependent variable. (Later we will see that this corresponds to an odds ratio of 𝑒\^0=1.)
+
+The higher the R-Squared, the better
+
+Unlike OLS regression, R-Squared cannot be interpreted as the % of variance explained by the model
+
+You can choose a cut-off value by looking at the histogram of ̂y_𝑖
+
+Many statisticians use a bunch of cut-off values for what's a relatively high and relatively low probability. These values are often:
+
+For now, we'll stick with a cutoff of 0.5
+
+Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate.
+
+Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate.
+
+ROC Curves
+
+A way to plot true positive rate (sensitivity) against false positive rate (i.e., 1 - specificity) A best cut-off value may be determined by optimizing sensitivity and specificity We can also use ROC curves to examine predictive quality of the model
+
+A couple different ways for identifying the probability cut-offs based on ROC Curves exist: Youden Index: A cut-off for which (Sensitivity + Specificity) is maximized A cut-off for which the ROC curve has the minimum distance from the upper left corner of the graph -- i.e., the point at which specificity = 1 and sensitivity = 1. This is just a different way of maximizing specificity and sensitivity We can implement this in R and get the optimal cut-off point and corresponding sensitivity and specificity
+
+Area under ROC Curve (AUC, which stands for Area Under Curve) is a measure of prediction accuracy of the model (how well a model predicts 1 responses as 1's and 0 responses as 0's). Higher AUCs mean that we can find a cut-off value for which both sensitivity and specificity of the model are relatively high. Possible values range between 0.5 (area under 45 degree line) and 1 (area of the entire box). A rough guide for classifying the accuracy: .90-1 = excellent .80-.90 = good .70-.80 = fair .60-.70 = poor .50-.60 = fail These might be somewhat conservative estimates, and there will be statisticians who will say that area \> .7 is just fine.
+
+Interpreting the AUC AUC may be interpreted as the probability that the model correctly ranks two randomly selected observations where one has 𝑦=1 and the other one has 𝑦=0. In other words, imagine that you randomly select 2 observations: Observation 1, for which 𝑦=1, and Observation 2, for which 𝑦=0. Recall that for each one of these observations, your logistic regression model estimates 𝑦̂=𝑝=𝑃(𝑦=1) The AUC may be interpreted as the probability that the 𝑦̂ for observation 1 (where 𝑦=1) will be higher than the 𝑦̂ for observation 2 (where 𝑦=0). An example: An AUC of .93397 means that, if you have 2 randomly selected zip codes, such that the first has a hospital and the second doesn't, 93.397% of the time the 𝑦̂ (i.e., the predicted probability of there being a hospital) in the first zip code will be higher than the 𝑦̂ in the second zip code.
+
+Similar to OLS, we can do cross-validation to determine a quality of the model. See following links for more information: K-Fold cross-validation in R: https://www.r-bloggers.com/evaluating-logistic-regression-models/ More on cross-validation in R: https://www.r-bloggers.com/predicting-creditability-using-logistic-regression-in-r-cross-validating-the-classifier-part-2-2/
+
+## Discussion
+
+- a)  In a couple sentences, recap what you did in the paper, and your findings.
+
+- i.  Which variables are strong predictors of crashes that involve drunk driving? Which variables aren't associated with the dependent variable?
+
+- ii. Are the results surprising? Discuss, and mention whether the variables you expect to be significant actually are significant, and if so, whether the relationships with the dependent variable are in the direction you would expect.
+
+- iii. Is logistic regression appropriate here? In other words, would the modeling rare events methods proposed by Paul Allison be more appropriate here?
+
+- 1.  Hint: look at the \# and % of cases with values of '1' for the dependent variable.
+
+- b)  What are some limitations of the analysis? Discuss.
+
+### Recap
+
+### Limitations
+
