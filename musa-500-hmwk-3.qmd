@@ -99,6 +99,8 @@ In order to understand logistic regression, we must first review the concept of 
 
 Odds are similar to probability. However, while probability may be calculated as $\frac{\text{\# desirable outcomes}}{\text{\# possible outcomes}}$, odds are calculated as $\frac{\text{\# desirable outcomes}}{\text{\# undesirable outcomes}}$.
 
+![Definitely how odds work](https://www.smbc-comics.com/comics/1482164544-20161219.png){width=50%}
+
 The log odds that $Y = 1$ (or the *logit*) are simply $ln(Odds(Y = 1))$. In other words, if $Y$ is our dependent variable and $X$ is our independent variable, a 1-unit increase in $X$ means that the odds that $Y=1$ go up by $e^\text{ln(Odds(Y = 1))}$.
 
 The *odds ratio* is the ratio of the odds of one outcome for our binary dependent variable versus the other possible outcome, or $\frac{\text{Odds(Y=1)}}{\text{Odds(Y=0)}}$. It can also be calculated by exponentiating the coefficient of the independent variable in question. The odds ratio indicates how much more likely we are to see $Y=1$ than $Y=0$, e.g., an odds ratio of 3 means that it is 3 times more likely that $Y=1$ than that $Y=0$.[^1] Rather than looking at the estimated $\beta$ coefficients, most statisticians prefer to look at odds ratios
@@ -143,6 +145,8 @@ Instead, we can use the Akaike Information Criterion to compare models. The AIC 
 Finally, in assessing the quality of our model, we can consider *specificity*, *sensitivity*, and the *misclassification rate*.
 
 Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate. Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate. The misclassification rate is the proportion of the sum of false positives and false negatives out of the total number of observations in the sample.
+
+![False positives are dangerous, folks](https://www.smbc-comics.com/comics/1468070206-20160709.png){width=50%}
 
 A simple way of assessing model quality is to determine a cut-off value for the fitted values $\hat{y_i}$, which is equal to P(Y = 1) at each observation $i$. When the model performs well, observations where $Y = 1$ will have higher values of $\hat{y_i}$, and observations where $Y = 0$ will have lower values of $\hat{y_i}$. We can set a cut-off value, ranging between 0 and 1, for what constitutes a "high" versus a "low" value based on the distribution of our data. In practice, most statisticians use multiple values, e.g., 0.1, 0.2, 0.3 ... 0.7. 
 
