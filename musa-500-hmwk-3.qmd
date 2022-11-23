@@ -2,6 +2,8 @@
 title: "MUSA 500, Homework #3"
 author: "Minwook Kang, Ann Zhang, and Nissim Lebovits"
 date: today
+title-block-banner: "#18bc9c"
+title-block-banner-color: "white"
 format: 
   html:
     toc: true
@@ -26,8 +28,12 @@ library(janitor)
 library(ggpubr)
 library(ggrepel)
 library(purrr)
+#install.packages("kableExtra")
 library(kableExtra)
 library(caret)
+library(corrplot)
+# install.packages("prediction")
+library(prediction)
 
 #ggthemr("pale") #set global ggplot theme
 options(scipen = 999) # turn off scientific notation
@@ -41,6 +47,8 @@ library(gmodels)
 #import data
 crash_data = read.csv("https://github.com/kmu973/tempDataRepo/raw/main/Logistic%20Regression%20Data.csv") |>
               clean_names()
+
+
 ```
 
 ## Introduction
@@ -59,35 +67,98 @@ Even though the original data set has a total of 53,260 car crashes, for the sak
 
 ### Issues with OLS Regression
 
-Recall the assumptions of OLS: Independence of observations Linear relationship between DV and each predictor Normality of residuals Homoscedasticity No multicollinearity.
+Let's begin by recalling the five assumptions of OLS regression:
+
+ 1. A linear relationship between the dependent variable and predictors
+ 2. Normality of residuals
+ 3. Homoscedasticity
+ 4. Independence of observations (no spatial, temporal or other forms of dependence in the data)
+ 5. No multicollinearity
+
+Additionally, OLS regression relies on continuous variables. In this assignment,
+we are dealing with binary variables as well as continuous variables, so regular
+OLS regression is inappropriate.
 
 ### Logistic Regression
 
--   Prior to diving into logistic regression, introduce the concept of odds. Explain what an odds ratio is, and how it may be interpreted.
+#### Assumptions of Logistic Regression
 
--   Present the regression equation for the logit model with multiple predictors
+Instead of OLS regression, we will use an approach known as logistic regression.
+The assumptions of logistic regression are similar to the assumptions in OLS regression,
+but not identical. In logistic regression:
 
-### Hypotheses for Each Predictor
+ 1. The dependent variable must be binary
+ 2. Observations must be independent
+ 3. There must not be multicollinearity
 
--   State the null and alternative hypotheses
+We will also need a larger sample size than in OLS because in logistic regression
+we rely on maximum likelihood estimation. Logistic regression also differs from OLS
+in that:
 
--   Talk about the Wald statistic and the distribution that it follows
+ 1. There's no assumption of a linear relationship between the DV and each IV
+ 2. There's no assumption of hetereoscedasticity
+ 3. Residuals do not need to be normally distributed
 
--   State that rather than looking at the estimated 𝛽 coefficients, most statisticians prefer to look at odds ratios, which are calculated by exponentiating the coefficients.
+#### Odds and Odds Ratios
+
+In order to understand logistic regression, we must first review the concept of
+*odds*.
+
+Odds are similar to probability. However, while probability may be calculated
+as $\frac{\text{\# desirable outcomes}}{\text{\# possible outcomes}}$, odds are 
+calculated as $\frac{\text{\# desirable outcomes}}{\text{\# undesirable outcomes}}$.
+
+The log odds that $Y = 1$ (or the *logit*) are simply $ln(Odds(Y = 1))$. In other words,
+if $Y$ is our dependent variable and $X$ is our independent variable, a 1-unit
+increase in $X$ means that the odds that $Y=1$ go up by $e^\text{ln(Odds(Y = 1))}$.
+
+The *odds ratio* is the ratio of the odds of one outcome for our binary dependent
+variable versus the other possible outcome, or $\frac{\text{Odds(Y=1)}}{\text{Odds(Y=0)}}$. It can also be calculated by exponentiating
+the coefficient of the independent variable in question. The odds ratio indicates
+how much more likely we are to see $Y=1$ than $Y=0$, e.g., an odds ratio of 3
+means that it is 3 times more likely that $Y=1$ than that $Y=0$.^[Sperandei S. Understanding logistic regression analysis. Biochem Med (Zagreb). 2014 Feb 15;24(1):12-8. doi: 10.11613/BM.2014.003. PMID: 24627710; PMCID: PMC3936971.] Rather than looking at the estimated $\beta$ coefficients, most statisticians prefer to look at odds ratios
+
+#### Equation for the Logistic Regression and Multivariate Logistic Regression
+
+For logistic regression with a single predictor, the equation is $$ln(\frac{p}{1-p}) = \beta_0 + \beta_1X_1 + \epsilon$$
+
+where $p = P(Y=1)$,
+
+$\frac{p}{1-p}$ are the odds,
+
+and $ln(\frac{p}{1-p})$ are the log odds, or logit.
+
+Solving algebraically, we come to the *inverse logit* or *logistic* function for logistic regression with one variable: $$p = \frac{e^{\beta_0+\beta_1X_1}}{1+e^{\beta_0+\beta_1X_1}} = \frac{1}{1+e^{-\beta_0-\beta_1X_1}}$$
+
+For multivariate logistic regression with $n$ predictors, that equation becomes $$p = \frac{e^{\beta_0+\beta_1X_1+\beta_2X_2+...+\beta_nX_n}}{1+e^{\beta_0+\beta_1X_1+\beta_2X_2+...+\beta_nX_n}}$$
+
+### Interpretation and Hypotheses for Each Predictor
+
+As explained above, we can say that $e^{\beta_1}$ is the extent to which the odds of $Y=1$ change as the predictor (i.e., Population) increases by 1 unit. So, when $e^{\beta_1} = 1.001$, 1.001 is the extent to which the odds that $Y=1$ go up as the independent variable $X$ increases by 1 unit. If we want to examine the extent to which the odds that $Y=1$ change as X increases by 100 units, we can simply raise $e$ to $100*\beta_1$, so $e^{100*\beta_1}$. If $\beta_1 < 0$, we would say that the odds that $Y=1$ *decrease* by a factor of $e^{\beta_1}$ as X *increases* by 1 unit. If $\beta_1 = 0$, then the predictor has *no effect* on the dependent variable.
+
+For each predictor $X_i$: 
+
+ - $H_0:\beta_i = 0 \hspace{1mm} (OR_i = 1)$
+ - $H_a:\beta_i \neq 0 \hspace{1mm} (OR_i \neq 1)$
+ 
+Within the context of logistic regression, the z-score is equal to $\frac{\hat{\beta_i}}{\sigma\hat{\beta_i}}$, which is normally distributed. This is also sometimes known as the *Wald statistic*, and yields a p-value for each term in the regression using the standard normal (z) tables and in the R output.
 
 ### Assessing Quality of Model Fit
 
--   i.  Mention that an R-squared may be calculated for logistic regression, however it is no longer a very useful metric and doesn't have the same interpretation as in OLS.
+With logistic regression, it is possible to calculate an $R^2$ value and, generally speaking, the higher the $R^2$, the better. However, this value is rarely used, as it cannot be interpreted as the percent of variance that is explained by the model.
 
--   ii. Talk about the Akaike Information Criterion to compare models. In one sentence describe what the AIC is (if the information in the slides isn't sufficient, I suggest Googling it or looking at Wikipedia), and state whether a lower AIC is indicative of a better or worse fit.
+Instead, we can use the Akaike Information Criterion to compare models. The AIC estimates prediction error, and therefore the quality of our model, and includes a penality that "is an increasing function of the number of estimated parameters".^[https://en.wikipedia.org/wiki/Akaike_information_criterion]  When comparing multiple models, "the one with the minimum AIC value assures a good balance of goodness of fit and complexity".^[https://www.sciencedirect.com/topics/social-sciences/akaike-information-criterion]
+
+Finally, in assessing the quality of our model, we can consider *specificity*, *sensitivity*, and the *misclassification rate*.
+
+Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate. Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate. The misclassification rate is the proportion of the sum of false positives and false negatives out of the total number of observations in the sample.
+
+To assess the quality of our model using these three measures, we can plot the true positive rate (sensitivity) against the false positive rate (specificity), as in Figure 1. Ideally, we want to see a high true positive rate and a low false positive rate. 
+
+![Figure 1: ROC Curve Example](File:Roccurves.png)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic#/media)
+
 
 -   iii. Explain what is meant by specificity, sensitivity and the misclassification rate, and describe how each quantity is calculated. Are higher or lower values of each quantity better or worse? In your explanation, be sure to mention about how fitted (predicted) values of y, i.e., y ̂, are calculated and interpreted in logistic regression.  Indicate why you should try using different cut-offs for what is considered a “high” probability of Y=1 when calculating the specificity, sensitivity and the misclassification rate.  Explain what the ROC curve is. Be sure to talk about some methods for calculating the optimal cut-off using the ROC curve, and specify which one you will be using in this report. Also, explain what we get by calculating the area under the ROC curve, and what might be value ranges for excellent, good, fair, poor and failing models.
-
-### Assumptions of Logistic Regression
-
--   i.  Which assumptions of OLS regression also hold for logistic regression, and which don't?
-
-Assumptions of Logistic Regression DV must be binary Independence of observations No severe multicollinearity Larger samples are needed than for linear regression because MLE (and not least squares) is used to estimate regression coefficients. You need at least 50 observations per predictor (compared to about 10 per predictor in OLS regression) But in Logistic Regression There's no assumption that there needs to be a linear relationship between DV and each IV No assumption of homoscedasticity Residuals don't need to be normal
 
 ### Exploratory Analysis Prior to Regression
 
@@ -264,11 +335,14 @@ a.  Keep in mind that in 3.c.ii, we're looking at minimum mis-classification rat
 
 #3-a 
 
+#install.packages("ROCR")
+library(ROCR)
+
 a <- cbind(crash_data$drinking_d, fit)
 colnames(a) <- c("labels", "predictions")
 head(a)
 roc <- as.data.frame(a)
-pred <- prediction(roc$predictions, roc$labels)
+pred <- ROCR::prediction(roc$predictions, roc$labels)
 roc.perf = performance(pred, measure = "tpr", x.measure = "fpr")
 plot(roc.perf)
 abline(a = 0, b = 1)

@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Minwook Kang, Ann Zhang, and Nissim Lebovits">
-<meta name="dcterms.date" content="2022-11-18">
+<meta name="dcterms.date" content="2022-11-22">
 
-<title>Homework #3</title>
+<title>MUSA 500, Homework #3</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -98,13 +98,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="musa-500-hmwk-3_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="musa-500-hmwk-3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="musa-500-hmwk-3_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<style>
+    .quarto-title-block .quarto-title-banner {
+      color: white;
+background: #18bc9c;
+    }
+    </style>
 
+<script src="musa-500-hmwk-3_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="musa-500-hmwk-3_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
 <body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">MUSA 500, Homework #3</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Minwook Kang, Ann Zhang, and Nissim Lebovits </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 22, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
   <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
@@ -113,16 +151,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
   <li><a href="#the-problem" id="toc-the-problem" class="nav-link" data-scroll-target="#the-problem">The Problem</a></li>
-  <li><a href="#initial-impressions" id="toc-initial-impressions" class="nav-link" data-scroll-target="#initial-impressions">Initial Impressions</a></li>
   <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">Tools</a></li>
   </ul></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
   <ul class="collapse">
   <li><a href="#issues-with-ols-regression" id="toc-issues-with-ols-regression" class="nav-link" data-scroll-target="#issues-with-ols-regression">Issues with OLS Regression</a></li>
-  <li><a href="#advantages-of-logistic-regression" id="toc-advantages-of-logistic-regression" class="nav-link" data-scroll-target="#advantages-of-logistic-regression">Advantages of Logistic Regression</a></li>
-  <li><a href="#hypotheses-for-each-predictor" id="toc-hypotheses-for-each-predictor" class="nav-link" data-scroll-target="#hypotheses-for-each-predictor">Hypotheses for Each Predictor</a></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic Regression</a></li>
+  <li><a href="#interpretation-and-hypotheses-for-each-predictor" id="toc-interpretation-and-hypotheses-for-each-predictor" class="nav-link" data-scroll-target="#interpretation-and-hypotheses-for-each-predictor">Interpretation and Hypotheses for Each Predictor</a></li>
   <li><a href="#assessing-quality-of-model-fit" id="toc-assessing-quality-of-model-fit" class="nav-link" data-scroll-target="#assessing-quality-of-model-fit">Assessing Quality of Model Fit</a></li>
-  <li><a href="#assumptions-of-logistic-regression" id="toc-assumptions-of-logistic-regression" class="nav-link" data-scroll-target="#assumptions-of-logistic-regression">Assumptions of Logistic Regression</a></li>
   <li><a href="#exploratory-analysis-prior-to-regression" id="toc-exploratory-analysis-prior-to-regression" class="nav-link" data-scroll-target="#exploratory-analysis-prior-to-regression">Exploratory Analysis Prior to Regression</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
@@ -139,36 +175,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul>
 </nav>
 </div>
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Homework #3</h1>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Minwook Kang, Ann Zhang, and Nissim Lebovits </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">November 18, 2022</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-</header>
 
 <div class="cell">
 <details>
@@ -176,19 +186,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#library(ggthemr) # mincomment : its not working on my pc</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggthemr</span>(<span class="st">"pale"</span>) <span class="co">#set global ggplot theme</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>) <span class="co"># turn off scientific notation</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(aod)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rms)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gmodels)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_knit<span class="sc">$</span><span class="fu">set</span>(<span class="at">root.dir =</span> <span class="st">"C:/Users/Nissim/Desktop/Fall 2022/Spat Stats/Homeworks/musa-500-hmwk-3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("kableExtra")</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("prediction")</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(prediction)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#ggthemr("pale") #set global ggplot theme</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>) <span class="co"># turn off scientific notation</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(aod)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rms)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gmodels)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#knitr::opts_knit$set(root.dir = "C:/Users/Nissim/Desktop/Fall 2022/Spat Stats/Homeworks/musa-500-hmwk-3")</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#import data</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>crash_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"https://github.com/kmu973/tempDataRepo/raw/main/Logistic%20Regression%20Data.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>              <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="introduction" class="level2">
@@ -199,363 +219,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Because the crash data are geocoded, it is possible to spatially join the data to the 2000 Census block group level data set that was used for the two previous homework assignments. After the spatial join, each crash point contains the median household income and the percent of individuals with at least a bachelor’s degree in the block group where the crash took place.</p>
 <p>Even though the original data set has a total of 53,260 car crashes, for the sake of this assignment, we remove the 9,896 crash locations which took place in non-residential block groups, where median household income and vacancy rates are 0, from the data set. The final data set contains the 43,364 crashes that took place in Philadelphia’s residential block groups. Here, we will be regressing the binary dependent variable, DRINKING_D, on the following binary and continuous predictors: FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC.</p>
 </section>
-<section id="initial-impressions" class="level3">
-<h3 class="anchored" data-anchor-id="initial-impressions">Initial Impressions</h3>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>crash_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"./HW 3/Logistic Regression Data.csv"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">clean_names</span>()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>drinking_d_table <span class="ot">=</span> <span class="fu">table</span>(crash_data<span class="sc">$</span>drinking_d)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(drinking_d_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-        0         1 
-0.9426944 0.0573056 </code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>crosstab <span class="ot">=</span> <span class="cf">function</span>(a){</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  crosstab_list <span class="ot">=</span> <span class="fu">CrossTable</span>(crash_data<span class="sc">$</span>drinking_d, a)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(crosstab_list)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>crosstab_df <span class="ot">=</span> <span class="fu">map</span>(crash_data[<span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>], crosstab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- 
-   Cell Contents
-|-------------------------|
-|                       N |
-| Chi-square contribution |
-|           N / Row Total |
-|           N / Col Total |
-|         N / Table Total |
-|-------------------------|
-
- 
-Total Observations in Table:  43364 
-
- 
-                      | a 
-crash_data$drinking_d |         0 |         1 | Row Total | 
-----------------------|-----------|-----------|-----------|
-                    0 |     40879 |         0 |     40879 | 
-                      |   142.404 |  2342.596 |           | 
-                      |     1.000 |     0.000 |     0.943 | 
-                      |     1.000 |     0.000 |           | 
-                      |     0.943 |     0.000 |           | 
-----------------------|-----------|-----------|-----------|
-                    1 |         0 |      2485 |      2485 | 
-                      |  2342.596 | 38536.404 |           | 
-                      |     0.000 |     1.000 |     0.057 | 
-                      |     0.000 |     1.000 |           | 
-                      |     0.000 |     0.057 |           | 
-----------------------|-----------|-----------|-----------|
-         Column Total |     40879 |      2485 |     43364 | 
-                      |     0.943 |     0.057 |           | 
-----------------------|-----------|-----------|-----------|
-
- 
-
- 
-   Cell Contents
-|-------------------------|
-|                       N |
-| Chi-square contribution |
-|           N / Row Total |
-|           N / Col Total |
-|         N / Table Total |
-|-------------------------|
-
- 
-Total Observations in Table:  43364 
-
- 
-                      | a 
-crash_data$drinking_d |         0 |         1 |         2 |         3 |         4 |         5 |         6 |         7 |         8 |         9 | Row Total | 
-----------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-                    0 |       391 |      8426 |      1747 |       148 |     14092 |      3006 |      1159 |      4184 |      7608 |       118 |     40879 | 
-                      |     0.106 |     0.649 |     3.418 |     0.024 |     4.530 |     5.417 |     1.220 |    19.157 |    17.178 |     0.078 |           | 
-                      |     0.010 |     0.206 |     0.043 |     0.004 |     0.345 |     0.074 |     0.028 |     0.102 |     0.186 |     0.003 |     0.943 | 
-                      |     0.958 |     0.934 |     0.902 |     0.955 |     0.960 |     0.904 |     0.913 |     0.881 |     0.989 |     0.967 |           | 
-                      |     0.009 |     0.194 |     0.040 |     0.003 |     0.325 |     0.069 |     0.027 |     0.096 |     0.175 |     0.003 |           | 
-----------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-                    1 |        17 |       591 |       190 |         7 |       591 |       321 |       111 |       565 |        88 |         4 |      2485 | 
-                      |     1.741 |    10.677 |    56.223 |     0.399 |    74.528 |    89.112 |    20.074 |   315.143 |   282.583 |     1.280 |           | 
-                      |     0.007 |     0.238 |     0.076 |     0.003 |     0.238 |     0.129 |     0.045 |     0.227 |     0.035 |     0.002 |     0.057 | 
-                      |     0.042 |     0.066 |     0.098 |     0.045 |     0.040 |     0.096 |     0.087 |     0.119 |     0.011 |     0.033 |           | 
-                      |     0.000 |     0.014 |     0.004 |     0.000 |     0.014 |     0.007 |     0.003 |     0.013 |     0.002 |     0.000 |           | 
-----------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-         Column Total |       408 |      9017 |      1937 |       155 |     14683 |      3327 |      1270 |      4749 |      7696 |       122 |     43364 | 
-                      |     0.009 |     0.208 |     0.045 |     0.004 |     0.339 |     0.077 |     0.029 |     0.110 |     0.177 |     0.003 |           | 
-----------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-
- 
-
- 
-   Cell Contents
-|-------------------------|
-|                       N |
-| Chi-square contribution |
-|           N / Row Total |
-|           N / Col Total |
-|         N / Table Total |
-|-------------------------|
-
- 
-Total Observations in Table:  43364 
-
- 
-                      | a 
-crash_data$drinking_d |         0 |         1 | Row Total | 
-----------------------|-----------|-----------|-----------|
-                    0 |     39698 |      1181 |     40879 | 
-                      |     0.303 |     9.299 |           | 
-                      |     0.971 |     0.029 |     0.943 | 
-                      |     0.945 |     0.863 |           | 
-                      |     0.915 |     0.027 |           | 
-----------------------|-----------|-----------|-----------|
-                    1 |      2297 |       188 |      2485 | 
-                      |     4.987 |   152.973 |           | 
-                      |     0.924 |     0.076 |     0.057 | 
-                      |     0.055 |     0.137 |           | 
-                      |     0.053 |     0.004 |           | 
-----------------------|-----------|-----------|-----------|
-         Column Total |     41995 |      1369 |     43364 | 
-                      |     0.968 |     0.032 |           | 
-----------------------|-----------|-----------|-----------|
-
- 
-
- 
-   Cell Contents
-|-------------------------|
-|                       N |
-| Chi-square contribution |
-|           N / Row Total |
-|           N / Col Total |
-|         N / Table Total |
-|-------------------------|
-
- 
-Total Observations in Table:  43364 
-
- 
-                      | a 
-crash_data$drinking_d |         0 |         1 | Row Total | 
-----------------------|-----------|-----------|-----------|
-                    0 |     40267 |       612 |     40879 | 
-                      |     0.117 |     6.919 |           | 
-                      |     0.985 |     0.015 |     0.943 | 
-                      |     0.944 |     0.848 |           | 
-                      |     0.929 |     0.014 |           | 
-----------------------|-----------|-----------|-----------|
-                    1 |      2375 |       110 |      2485 | 
-                      |     1.927 |   113.824 |           | 
-                      |     0.956 |     0.044 |     0.057 | 
-                      |     0.056 |     0.152 |           | 
-                      |     0.055 |     0.003 |           | 
-----------------------|-----------|-----------|-----------|
-         Column Total |     42642 |       722 |     43364 | 
-                      |     0.983 |     0.017 |           | 
-----------------------|-----------|-----------|-----------|
-
- 
-
- 
-   Cell Contents
-|-------------------------|
-|                       N |
-| Chi-square contribution |
-|           N / Row Total |
-|           N / Col Total |
-|         N / Table Total |
-|-------------------------|
-
- 
-Total Observations in Table:  43364 
-
- 
-                      | a 
-crash_data$drinking_d |         0 |         1 | Row Total | 
-----------------------|-----------|-----------|-----------|
-                    0 |     40453 |       426 |     40879 | 
-                      |     0.000 |     0.009 |           | 
-                      |     0.990 |     0.010 |     0.943 | 
-                      |     0.943 |     0.938 |           | 
-                      |     0.933 |     0.010 |           | 
-----------------------|-----------|-----------|-----------|
-                    1 |      2457 |        28 |      2485 | 
-                      |     0.002 |     0.151 |           | 
-                      |     0.989 |     0.011 |     0.057 | 
-                      |     0.057 |     0.062 |           | 
-                      |     0.057 |     0.001 |           | 
-----------------------|-----------|-----------|-----------|
-         Column Total |     42910 |       454 |     43364 | 
-                      |     0.990 |     0.010 |           | 
-----------------------|-----------|-----------|-----------|
-
- 
-
- 
-   Cell Contents
-|-------------------------|
-|                       N |
-| Chi-square contribution |
-|           N / Row Total |
-|           N / Col Total |
-|         N / Table Total |
-|-------------------------|
-
- 
-Total Observations in Table:  43364 
-
- 
-                      | a 
-crash_data$drinking_d |         0 |         1 | Row Total | 
-----------------------|-----------|-----------|-----------|
-                    0 |     39618 |      1261 |     40879 | 
-                      |     0.757 |    20.834 |           | 
-                      |     0.969 |     0.031 |     0.943 | 
-                      |     0.947 |     0.829 |           | 
-                      |     0.914 |     0.029 |           | 
-----------------------|-----------|-----------|-----------|
-                    1 |      2225 |       260 |      2485 | 
-                      |    12.458 |   342.731 |           | 
-                      |     0.895 |     0.105 |     0.057 | 
-                      |     0.053 |     0.171 |           | 
-                      |     0.051 |     0.006 |           | 
-----------------------|-----------|-----------|-----------|
-         Column Total |     41843 |      1521 |     43364 | 
-                      |     0.965 |     0.035 |           | 
-----------------------|-----------|-----------|-----------|
-
- 
-
- 
-   Cell Contents
-|-------------------------|
-|                       N |
-| Chi-square contribution |
-|           N / Row Total |
-|           N / Col Total |
-|         N / Table Total |
-|-------------------------|
-
- 
-Total Observations in Table:  43364 
-
- 
-                      | a 
-crash_data$drinking_d |         0 |         1 | Row Total | 
-----------------------|-----------|-----------|-----------|
-                    0 |     22357 |     18522 |     40879 | 
-                      |     1.737 |     2.137 |           | 
-                      |     0.547 |     0.453 |     0.943 | 
-                      |     0.934 |     0.953 |           | 
-                      |     0.516 |     0.427 |           | 
-----------------------|-----------|-----------|-----------|
-                    1 |      1569 |       916 |      2485 | 
-                      |    28.566 |    35.162 |           | 
-                      |     0.631 |     0.369 |     0.057 | 
-                      |     0.066 |     0.047 |           | 
-                      |     0.036 |     0.021 |           | 
-----------------------|-----------|-----------|-----------|
-         Column Total |     23926 |     19438 |     43364 | 
-                      |     0.552 |     0.448 |           | 
-----------------------|-----------|-----------|-----------|
-
- 
-
- 
-   Cell Contents
-|-------------------------|
-|                       N |
-| Chi-square contribution |
-|           N / Row Total |
-|           N / Col Total |
-|         N / Table Total |
-|-------------------------|
-
- 
-Total Observations in Table:  43364 
-
- 
-                      | a 
-crash_data$drinking_d |         0 |         1 | Row Total | 
-----------------------|-----------|-----------|-----------|
-                    0 |     40205 |       674 |     40879 | 
-                      |     0.019 |     1.153 |           | 
-                      |     0.984 |     0.016 |     0.943 | 
-                      |     0.942 |     0.983 |           | 
-                      |     0.927 |     0.016 |           | 
-----------------------|-----------|-----------|-----------|
-                    1 |      2473 |        12 |      2485 | 
-                      |     0.305 |    18.975 |           | 
-                      |     0.995 |     0.005 |     0.057 | 
-                      |     0.058 |     0.017 |           | 
-                      |     0.057 |     0.000 |           | 
-----------------------|-----------|-----------|-----------|
-         Column Total |     42678 |       686 |     43364 | 
-                      |     0.984 |     0.016 |           | 
-----------------------|-----------|-----------|-----------|
-
- 
-
- 
-   Cell Contents
-|-------------------------|
-|                       N |
-| Chi-square contribution |
-|           N / Row Total |
-|           N / Col Total |
-|         N / Table Total |
-|-------------------------|
-
- 
-Total Observations in Table:  43364 
-
- 
-                      | a 
-crash_data$drinking_d |         0 |         1 | Row Total | 
-----------------------|-----------|-----------|-----------|
-                    0 |     36642 |      4237 |     40879 | 
-                      |     0.464 |     4.155 |           | 
-                      |     0.896 |     0.104 |     0.943 | 
-                      |     0.939 |     0.973 |           | 
-                      |     0.845 |     0.098 |           | 
-----------------------|-----------|-----------|-----------|
-                    1 |      2366 |       119 |      2485 | 
-                      |     7.633 |    68.353 |           | 
-                      |     0.952 |     0.048 |     0.057 | 
-                      |     0.061 |     0.027 |           | 
-                      |     0.055 |     0.003 |           | 
-----------------------|-----------|-----------|-----------|
-         Column Total |     39008 |      4356 |     43364 | 
-                      |     0.900 |     0.100 |           | 
-----------------------|-----------|-----------|-----------|
-
- </code></pre>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>crosstab_df[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>   y
-x       0     1
-  0 40879     0
-  1     0  2485</code></pre>
-</div>
-</div>
-</section>
 <section id="tools" class="level3">
 <h3 class="anchored" data-anchor-id="tools">Tools</h3>
 </section>
@@ -564,35 +227,1336 @@ x       0     1
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <section id="issues-with-ols-regression" class="level3">
 <h3 class="anchored" data-anchor-id="issues-with-ols-regression">Issues with OLS Regression</h3>
-<p>Recall the assumptions of OLS: Independence of observations Linear relationship between DV and each predictor Normality of residuals Homoscedasticity No multicollinearity</p>
+<p>Let’s begin by recalling the five assumptions of OLS regression:</p>
+<ol type="1">
+<li>A linear relationship between the dependent variable and predictors</li>
+<li>Normality of residuals</li>
+<li>Homoscedasticity</li>
+<li>Independence of observations (no spatial, temporal or other forms of dependence in the data)</li>
+<li>No multicollinearity</li>
+</ol>
+<p>Additionally, OLS regression relies on continuous variables. In this assignment, we are dealing with binary variables as well as continuous variables, so regular OLS regression is inappropriate.</p>
 </section>
-<section id="advantages-of-logistic-regression" class="level3">
-<h3 class="anchored" data-anchor-id="advantages-of-logistic-regression">Advantages of Logistic Regression</h3>
-<p>Assumptions of Logistic Regression DV must be binary Independence of observations No severe multicollinearity Larger samples are needed than for linear regression because MLE (and not least squares) is used to estimate regression coefficients. You need at least 50 observations per predictor (compared to about 10 per predictor in OLS regression) But in Logistic Regression There’s no assumption that there needs to be a linear relationship between DV and each IV No assumption of homoscedasticity Residuals don’t need to be normal</p>
+<section id="logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h3>
+<section id="assumptions-of-logistic-regression" class="level4">
+<h4 class="anchored" data-anchor-id="assumptions-of-logistic-regression">Assumptions of Logistic Regression</h4>
+<p>Instead of OLS regression, we will use an approach known as logistic regression. The assumptions of logistic regression are similar to the assumptions in OLS regression, but not identical. In logistic regression:</p>
+<ol type="1">
+<li>The dependent variable must be binary</li>
+<li>Observations must be independent</li>
+<li>There must not be multicollinearity</li>
+</ol>
+<p>We will also need a larger sample size than in OLS because in logistic regression we rely on maximum likelihood estimation. Logistic regression also differs from OLS in that:</p>
+<ol type="1">
+<li>There’s no assumption of a linear relationship between the DV and each IV</li>
+<li>There’s no assumption of hetereoscedasticity</li>
+<li>Residuals do not need to be normally distributed</li>
+</ol>
 </section>
-<section id="hypotheses-for-each-predictor" class="level3">
-<h3 class="anchored" data-anchor-id="hypotheses-for-each-predictor">Hypotheses for Each Predictor</h3>
+<section id="odds-and-odds-ratios" class="level4">
+<h4 class="anchored" data-anchor-id="odds-and-odds-ratios">Odds and Odds Ratios</h4>
+<p>In order to understand logistic regression, we must first review the concept of <em>odds</em>.</p>
+<p>Odds are similar to probability. However, while probability may be calculated as <span class="math inline">\(\frac{\text{\# desirable outcomes}}{\text{\# possible outcomes}}\)</span>, odds are calculated as <span class="math inline">\(\frac{\text{\# desirable outcomes}}{\text{\# undesirable outcomes}}\)</span>.</p>
+<p>The log odds that <span class="math inline">\(Y = 1\)</span> (or the <em>logit</em>) are simply <span class="math inline">\(ln(Odds(Y = 1))\)</span>. In other words, if <span class="math inline">\(Y\)</span> is our dependent variable and <span class="math inline">\(X\)</span> is our independent variable, a 1-unit increase in <span class="math inline">\(X\)</span> means that the odds that <span class="math inline">\(Y=1\)</span> go up by <span class="math inline">\(e^\text{ln(Odds(Y = 1))}\)</span>.</p>
+<p>The <em>odds ratio</em> is the ratio of the odds of one outcome for our binary dependent variable versus the other possible outcome, or <span class="math inline">\(\frac{\text{Odds(Y=1)}}{\text{Odds(Y=0)}}\)</span>. It can also be calculated by exponentiating the coefficient of the independent variable in question. The odds ratio indicates how much more likely we are to see <span class="math inline">\(Y=1\)</span> than <span class="math inline">\(Y=0\)</span>, e.g., an odds ratio of 3 means that it is 3 times more likely that <span class="math inline">\(Y=1\)</span> than that <span class="math inline">\(Y=0\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Rather than looking at the estimated <span class="math inline">\(\beta\)</span> coefficients, most statisticians prefer to look at odds ratios</p>
+</section>
+<section id="equation-for-the-logistic-regression-and-multivariate-logistic-regression" class="level4">
+<h4 class="anchored" data-anchor-id="equation-for-the-logistic-regression-and-multivariate-logistic-regression">Equation for the Logistic Regression and Multivariate Logistic Regression</h4>
+<p>For logistic regression with a single predictor, the equation is <span class="math display">\[ln(\frac{p}{1-p}) = \beta_0 + \beta_1X_1 + \epsilon\]</span></p>
+<p>where <span class="math inline">\(p = P(Y=1)\)</span>,</p>
+<p><span class="math inline">\(\frac{p}{1-p}\)</span> are the odds,</p>
+<p>and <span class="math inline">\(ln(\frac{p}{1-p})\)</span> are the log odds, or logit.</p>
+<p>Solving algebraically, we come to the <em>inverse logit</em> or <em>logistic</em> function for logistic regression with one variable: <span class="math display">\[p = \frac{e^{\beta_0+\beta_1X_1}}{1+e^{\beta_0+\beta_1X_1}} = \frac{1}{1+e^{-\beta_0-\beta_1X_1}}\]</span></p>
+<p>For multivariate logistic regression with <span class="math inline">\(n\)</span> predictors, that equation becomes <span class="math display">\[p = \frac{e^{\beta_0+\beta_1X_1+\beta_2X_2+...+\beta_nX_n}}{1+e^{\beta_0+\beta_1X_1+\beta_2X_2+...+\beta_nX_n}}\]</span></p>
+</section>
+</section>
+<section id="interpretation-and-hypotheses-for-each-predictor" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-and-hypotheses-for-each-predictor">Interpretation and Hypotheses for Each Predictor</h3>
+<p>As explained above, we can say that <span class="math inline">\(e^{\beta_1}\)</span> is the extent to which the odds of <span class="math inline">\(Y=1\)</span> change as the predictor (i.e., Population) increases by 1 unit. So, when <span class="math inline">\(e^{\beta_1} = 1.001\)</span>, 1.001 is the extent to which the odds that <span class="math inline">\(Y=1\)</span> go up as the independent variable <span class="math inline">\(X\)</span> increases by 1 unit. If we want to examine the extent to which the odds that <span class="math inline">\(Y=1\)</span> change as X increases by 100 units, we can simply raise <span class="math inline">\(e\)</span> to <span class="math inline">\(100*\beta_1\)</span>, so <span class="math inline">\(e^{100*\beta_1}\)</span>. If <span class="math inline">\(\beta_1 &lt; 0\)</span>, we would say that the odds that <span class="math inline">\(Y=1\)</span> <em>decrease</em> by a factor of <span class="math inline">\(e^{\beta_1}\)</span> as X <em>increases</em> by 1 unit. If <span class="math inline">\(\beta_1 = 0\)</span>, then the predictor has <em>no effect</em> on the dependent variable.</p>
+<p>For each predictor <span class="math inline">\(X_i\)</span>:</p>
+<ul>
+<li><span class="math inline">\(H_0:\beta_i = 0 \hspace{1mm} (OR_i = 1)\)</span></li>
+<li><span class="math inline">\(H_a:\beta_i \neq 0 \hspace{1mm} (OR_i \neq 1)\)</span></li>
+</ul>
+<p>Within the context of logistic regression, the z-score is equal to <span class="math inline">\(\frac{\hat{\beta_i}}{\sigma\hat{\beta_i}}\)</span>, which is normally distributed. This is also sometimes known as the <em>Wald statistic</em>, and yields a p-value for each term in the regression using the standard normal (z) tables and in the R output.</p>
 </section>
 <section id="assessing-quality-of-model-fit" class="level3">
 <h3 class="anchored" data-anchor-id="assessing-quality-of-model-fit">Assessing Quality of Model Fit</h3>
-</section>
-<section id="assumptions-of-logistic-regression" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions-of-logistic-regression">Assumptions of Logistic Regression</h3>
+<p>With logistic regression, it is possible to calculate an <span class="math inline">\(R^2\)</span> value and, generally speaking, the higher the <span class="math inline">\(R^2\)</span>, the better. However, this value is rarely used, as it cannot be interpreted as the percent of variance that is explained by the model.</p>
+<p>Instead, we can use the Akaike Information Criterion to compare models. The AIC estimates prediction error, and therefore the quality of our model, and includes a penality that “is an increasing function of the number of estimated parameters”.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> When comparing multiple models, “the one with the minimum AIC value assures a good balance of goodness of fit and complexity”.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>Finally, in assessing the quality of our model, we can consider <em>specificity</em>, <em>sensitivity</em>, and the <em>misclassification rate</em>.</p>
+<p>Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate. Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate. The misclassification rate is the proportion of the sum of false positives and false negatives out of the total number of observations in the sample.</p>
+<p>To assess the quality of our model using these three measures, we can plot the true positive rate (sensitivity) against the false positive rate (specificity), as in Figure 1. Ideally, we want to see a high true positive rate and a low false positive rate.</p>
+<p><img src="File:Roccurves.png" class="img-fluid" alt="Figure 1: ROC Curve Example">](https://en.wikipedia.org/wiki/Receiver_operating_characteristic#/media)</p>
+<ul>
+<li><ol start="3" type="i">
+<li>Explain what is meant by specificity, sensitivity and the misclassification rate, and describe how each quantity is calculated. Are higher or lower values of each quantity better or worse? In your explanation, be sure to mention about how fitted (predicted) values of y, i.e., y ̂, are calculated and interpreted in logistic regression. Indicate why you should try using different cut-offs for what is considered a “high” probability of Y=1 when calculating the specificity, sensitivity and the misclassification rate. Explain what the ROC curve is. Be sure to talk about some methods for calculating the optimal cut-off using the ROC curve, and specify which one you will be using in this report. Also, explain what we get by calculating the area under the ROC curve, and what might be value ranges for excellent, good, fair, poor and failing models.</li>
+</ol></li>
+</ul>
 </section>
 <section id="exploratory-analysis-prior-to-regression" class="level3">
 <h3 class="anchored" data-anchor-id="exploratory-analysis-prior-to-regression">Exploratory Analysis Prior to Regression</h3>
+<ul>
+<li><ol type="i">
+<li>Talk about running the cross-tabulations between the dependent variable and binary predictors to see whether there is an association between the two variables. 1. Say that the appropriate statistical test for examining the association between two categorical variables is the Chi-Square test (described above on pp.&nbsp;4-5 of this document). a. Be sure to mention the null and alternative hypotheses for the test.</li>
+</ol></li>
+<li><ol start="2" type="i">
+<li>Also state that we can compare the means of continuous predictors for both values of the dependent variable. 1. Say that the independent samples t-tests (described above on pp.&nbsp;5-6 of this document) are the appropriate statistical tests for examining whether there were significant differences in mean values of PCTBACHMOR and MEDHHINC for crashes that involved alcohol and those that didn’t. a. Mention the null and alternative hypotheses for the t-test.</li>
+</ol></li>
+</ul>
 </section>
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <section id="findings-from-exploratory-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="findings-from-exploratory-analysis">Findings from Exploratory Analysis</h3>
+<ul>
+<li><ol type="i">
+<li>Present the tabulation of the dependent variable and comment on the number and proportion of crashes that involves drunk driving.</li>
+</ol></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>drinking_d_table <span class="ot">=</span> <span class="fu">table</span>(crash_data<span class="sc">$</span>drinking_d)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(drinking_d_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        0         1 
+0.9426944 0.0573056 </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.frame</span>(drinking_d_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Var1  Freq
+1    0 40879
+2    1  2485</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.frame</span>(<span class="fu">prop.table</span>(drinking_d_table))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Var1      Freq
+1    0 0.9426944
+2    1 0.0573056</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>DV_table <span class="ot">&lt;-</span> <span class="fu">left_join</span>(<span class="fu">as.data.frame</span>(drinking_d_table), <span class="fu">as.data.frame</span>(<span class="fu">prop.table</span>(drinking_d_table)), <span class="at">by =</span> <span class="st">"Var1"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Var1 =</span> <span class="fu">case_when</span>(Var1 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"Non-drunk"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                          Var1 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Drunk"</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Freq.y =</span> <span class="fu">round</span>(Freq.y, <span class="dv">3</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>DV_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Var1 Freq.x Freq.y
+1 Non-drunk  40879  0.943
+2     Drunk   2485  0.057</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(DV_table, <span class="at">caption =</span> <span class="st">"&lt;center&gt;&lt;span style='font-size:14px; color:black; font-family: Arial'&gt;Table 2-1-1. tabulation of the dependent variable&lt;/span&gt;&lt;/center&gt;"</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Driver Status"</span>, <span class="st">"Count"</span>, <span class="st">"Proportion"</span>), <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_minimal</span>(<span class="at">full_width =</span> T, <span class="at">html_font =</span> <span class="st">"Arial"</span>, <span class="at">font_size =</span> <span class="dv">14</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">row_spec</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">extra_css =</span> <span class="st">"line-height: 30px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class=" lightable-minimal" style="font-size: 14px; font-family: Arial; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;"><center><span style="font-size:14px; color:black; font-family: Arial">Table 2-1-1. tabulation of the dependent variable</span></center></caption>
+ <thead>
+  <tr>
+   <th style="text-align:center;line-height: 30px"> Driver Status </th>
+   <th style="text-align:center;line-height: 30px"> Count </th>
+   <th style="text-align:center;line-height: 30px"> Proportion </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;line-height: 30px"> Non-drunk </td>
+   <td style="text-align:center;line-height: 30px"> 40879 </td>
+   <td style="text-align:center;line-height: 30px"> 0.943 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;line-height: 30px"> Drunk </td>
+   <td style="text-align:center;line-height: 30px"> 2485 </td>
+   <td style="text-align:center;line-height: 30px"> 0.057 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<ul>
+<li><ol start="2" type="i">
+<li>Present the cross-tabulation of the dependent variable with each of the binary predictors (table on p.&nbsp;4 above). 1. In the table, add (an) extra column(s) which presents the results of the Chi-Square test (you may present the p-value only, or the Chi-Square statistic, the degrees of freedom and the p-value).</li>
+</ol></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(crash_data<span class="sc">$</span>fatal_or_m, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>, <span class="at">chisq =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | crash_data$drinking_d 
+crash_data$fatal_or_m |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     39698 |      2297 |     41995 | 
+                      |     0.971 |     0.924 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |      1181 |       188 |      1369 | 
+                      |     0.029 |     0.076 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     40879 |      2485 |     43364 | 
+                      |     0.943 |     0.057 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+Statistics for All Table Factors
+
+
+Pearson's Chi-squared test 
+------------------------------------------------------------
+Chi^2 =  167.5615     d.f. =  1     p =  0.00000000000000000000000000000000000002522202 
+
+Pearson's Chi-squared test with Yates' continuity correction 
+------------------------------------------------------------
+Chi^2 =  166.0354     d.f. =  1     p =  0.00000000000000000000000000000000000005434077 
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(crash_data<span class="sc">$</span>overturned, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>, <span class="at">chisq =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | crash_data$drinking_d 
+crash_data$overturned |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     40267 |      2375 |     42642 | 
+                      |     0.985 |     0.956 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |       612 |       110 |       722 | 
+                      |     0.015 |     0.044 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     40879 |      2485 |     43364 | 
+                      |     0.943 |     0.057 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+Statistics for All Table Factors
+
+
+Pearson's Chi-squared test 
+------------------------------------------------------------
+Chi^2 =  122.788     d.f. =  1     p =  0.0000000000000000000000000001551762 
+
+Pearson's Chi-squared test with Yates' continuity correction 
+------------------------------------------------------------
+Chi^2 =  121.0052     d.f. =  1     p =  0.000000000000000000000000000381124 
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(crash_data<span class="sc">$</span>cell_phone, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>, <span class="at">chisq =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | crash_data$drinking_d 
+crash_data$cell_phone |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     40453 |      2457 |     42910 | 
+                      |     0.990 |     0.989 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |       426 |        28 |       454 | 
+                      |     0.010 |     0.011 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     40879 |      2485 |     43364 | 
+                      |     0.943 |     0.057 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+Statistics for All Table Factors
+
+
+Pearson's Chi-squared test 
+------------------------------------------------------------
+Chi^2 =  0.162071     d.f. =  1     p =  0.6872569 
+
+Pearson's Chi-squared test with Yates' continuity correction 
+------------------------------------------------------------
+Chi^2 =  0.09065262     d.f. =  1     p =  0.7633491 
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(crash_data<span class="sc">$</span>speeding, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>, <span class="at">chisq =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                    | crash_data$drinking_d 
+crash_data$speeding |         0 |         1 | Row Total | 
+--------------------|-----------|-----------|-----------|
+                  0 |     39618 |      2225 |     41843 | 
+                    |     0.969 |     0.895 |           | 
+--------------------|-----------|-----------|-----------|
+                  1 |      1261 |       260 |      1521 | 
+                    |     0.031 |     0.105 |           | 
+--------------------|-----------|-----------|-----------|
+       Column Total |     40879 |      2485 |     43364 | 
+                    |     0.943 |     0.057 |           | 
+--------------------|-----------|-----------|-----------|
+
+ 
+Statistics for All Table Factors
+
+
+Pearson's Chi-squared test 
+------------------------------------------------------------
+Chi^2 =  376.7808     d.f. =  1     p =  0.000000000000000000000000000000000000000000000000000000000000000000000000000000000006249562 
+
+Pearson's Chi-squared test with Yates' continuity correction 
+------------------------------------------------------------
+Chi^2 =  374.6039     d.f. =  1     p =  0.00000000000000000000000000000000000000000000000000000000000000000000000000000000001861184 
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(crash_data<span class="sc">$</span>aggressive, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>, <span class="at">chisq =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | crash_data$drinking_d 
+crash_data$aggressive |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     22357 |      1569 |     23926 | 
+                      |     0.547 |     0.631 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |     18522 |       916 |     19438 | 
+                      |     0.453 |     0.369 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     40879 |      2485 |     43364 | 
+                      |     0.943 |     0.057 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+Statistics for All Table Factors
+
+
+Pearson's Chi-squared test 
+------------------------------------------------------------
+Chi^2 =  67.60186     d.f. =  1     p =  0.000000000000000200079 
+
+Pearson's Chi-squared test with Yates' continuity correction 
+------------------------------------------------------------
+Chi^2 =  67.2607     d.f. =  1     p =  0.0000000000000002378758 
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(crash_data<span class="sc">$</span>driver1617, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>, <span class="at">chisq =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                      | crash_data$drinking_d 
+crash_data$driver1617 |         0 |         1 | Row Total | 
+----------------------|-----------|-----------|-----------|
+                    0 |     40205 |      2473 |     42678 | 
+                      |     0.984 |     0.995 |           | 
+----------------------|-----------|-----------|-----------|
+                    1 |       674 |        12 |       686 | 
+                      |     0.016 |     0.005 |           | 
+----------------------|-----------|-----------|-----------|
+         Column Total |     40879 |      2485 |     43364 | 
+                      |     0.943 |     0.057 |           | 
+----------------------|-----------|-----------|-----------|
+
+ 
+Statistics for All Table Factors
+
+
+Pearson's Chi-squared test 
+------------------------------------------------------------
+Chi^2 =  20.45167     d.f. =  1     p =  0.000006115619 
+
+Pearson's Chi-squared test with Yates' continuity correction 
+------------------------------------------------------------
+Chi^2 =  19.7097     d.f. =  1     p =  0.000009014275 
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(crash_data<span class="sc">$</span>driver65plus, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>, <span class="at">chisq =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+                        | crash_data$drinking_d 
+crash_data$driver65plus |         0 |         1 | Row Total | 
+------------------------|-----------|-----------|-----------|
+                      0 |     36642 |      2366 |     39008 | 
+                        |     0.896 |     0.952 |           | 
+------------------------|-----------|-----------|-----------|
+                      1 |      4237 |       119 |      4356 | 
+                        |     0.104 |     0.048 |           | 
+------------------------|-----------|-----------|-----------|
+           Column Total |     40879 |      2485 |     43364 | 
+                        |     0.943 |     0.057 |           | 
+------------------------|-----------|-----------|-----------|
+
+ 
+Statistics for All Table Factors
+
+
+Pearson's Chi-squared test 
+------------------------------------------------------------
+Chi^2 =  80.6047     d.f. =  1     p =  0.000000000000000000275703 
+
+Pearson's Chi-squared test with Yates' continuity correction 
+------------------------------------------------------------
+Chi^2 =  79.9888     d.f. =  1     p =  0.0000000000000000003765375 
+
+ </code></pre>
+</div>
+</div>
+<p>-2. Discuss whether the Chi-Square test shows that there is a significant association between the dependent variable and each of the binary predictors (i.e., can you reject the Null Hypothesis?).</p>
+<!--writings-->
+<ul>
+<li><ol start="3" type="i">
+<li>Present the means of the continuous predictors for both values of the dependent variable (table on p.&nbsp;5). 1. In the table, add an extra column which presents the results of the independent samples t-test (you may present the p-value only, or the t-statistic, the degrees of freedom and the p-value).</li>
+</ol></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(crash_data<span class="sc">$</span>pctbachmor, crash_data<span class="sc">$</span>drinking_d, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       0        1 
+16.56986 16.61173 </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(crash_data<span class="sc">$</span>pctbachmor, crash_data<span class="sc">$</span>drinking_d, sd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       0        1 
+18.21426 18.72091 </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(crash_data<span class="sc">$</span>medhhinc, crash_data<span class="sc">$</span>drinking_d, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       0        1 
+31483.05 31998.75 </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(crash_data<span class="sc">$</span>medhhinc, crash_data<span class="sc">$</span>drinking_d, sd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      0       1 
+16930.1 17810.5 </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(crash_data<span class="sc">$</span>pctbachmor<span class="sc">~</span>crash_data<span class="sc">$</span>drinking_d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  crash_data$pctbachmor by crash_data$drinking_d
+t = -0.10842, df = 2777.5, p-value = 0.9137
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -0.7991398  0.7153982
+sample estimates:
+mean in group 0 mean in group 1 
+       16.56986        16.61173 </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(crash_data<span class="sc">$</span>medhhinc<span class="sc">~</span>crash_data<span class="sc">$</span>drinking_d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  crash_data$medhhinc by crash_data$drinking_d
+t = -1.4053, df = 2763.9, p-value = 0.16
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -1235.2508   203.8544
+sample estimates:
+mean in group 0 mean in group 1 
+       31483.05        31998.75 </code></pre>
+</div>
+</div>
+<ul>
+<li><ol start="2" type="1">
+<li>Discuss whether the t-test shows that there is a significant association between the dependent variable and each of the continuous predictors (i.e., can you reject the Null Hypothesis?).</li>
+</ol></li>
+</ul>
+<!--writings-->
 </section>
 <section id="assumptions-of-logistic-regression-1" class="level3">
 <h3 class="anchored" data-anchor-id="assumptions-of-logistic-regression-1">Assumptions of Logistic Regression</h3>
+<ul>
+<li><ol type="i">
+<li>In particular, be sure to present the matrix showing the pairwise Pearson correlations for all the binary and continuous predictors. 1. Comment on any potential limitations of using Pearson correlations to measure the associations between binary predictors.</li>
+</ol></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3-a multicollinearlity test</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>correlation <span class="ot">&lt;-</span> crash_data[<span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">12</span><span class="sc">:</span><span class="dv">13</span>)]</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(correlation, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               fatal_or_m    overturned    cell_phone      speeding  aggressive
+fatal_or_m    1.000000000  0.0331959240  0.0021603225  0.0817126678 -0.01104729
+overturned    0.033195924  1.0000000000 -0.0009897786  0.0594402861  0.01643894
+cell_phone    0.002160322 -0.0009897786  1.0000000000 -0.0036011640 -0.02574299
+speeding      0.081712668  0.0594402861 -0.0036011640  1.0000000000  0.21152537
+aggressive   -0.011047295  0.0164389397 -0.0257429929  0.2115253684  1.00000000
+driver1617   -0.002808379  0.0037239674  0.0014851333  0.0160115997  0.02842895
+driver65plus -0.012512349 -0.0195009743 -0.0027172590 -0.0328541108  0.01502693
+pctbachmor   -0.014652265  0.0093321352 -0.0012458540 -0.0007390853  0.02712211
+medhhinc     -0.018212431  0.0279213029  0.0020998852  0.0117866805  0.04344045
+               driver1617 driver65plus    pctbachmor     medhhinc
+fatal_or_m   -0.002808379 -0.012512349 -0.0146522648 -0.018212431
+overturned    0.003723967 -0.019500974  0.0093321352  0.027921303
+cell_phone    0.001485133 -0.002717259 -0.0012458540  0.002099885
+speeding      0.016011600 -0.032854111 -0.0007390853  0.011786681
+aggressive    0.028428953  0.015026930  0.0271221096  0.043440451
+driver1617    1.000000000 -0.020848417 -0.0026359662  0.022877425
+driver65plus -0.020848417  1.000000000  0.0261903901  0.050337711
+pctbachmor   -0.002635966  0.026190390  1.0000000000  0.477869537
+medhhinc      0.022877425  0.050337711  0.4778695368  1.000000000</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mc_test <span class="ot">&lt;-</span> <span class="fu">cor</span>(correlation,<span class="at">use=</span><span class="st">"pairwise.complete.obs"</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(mc_test, <span class="at">method =</span> <span class="st">"square"</span>,<span class="at">type =</span> <span class="st">"lower"</span>,<span class="at">tl.cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="musa-500-hmwk-3_files/figure-html/multicollinearlity%20check-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>State whether there is evidence of multicollinearity, and remind the reader how you’re defining multicollinearity.</li>
+</ol>
+<!--writings-->
 </section>
 <section id="logistic-regression-results" class="level3">
 <h3 class="anchored" data-anchor-id="logistic-regression-results">Logistic Regression Results</h3>
+<ul>
+<li><ol type="i">
+<li>First, present the results of the logistic regression with all predictors (FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC).</li>
+</ol></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3-a </span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>logit <span class="ot">&lt;-</span> <span class="fu">glm</span>(drinking_d <span class="sc">~</span> fatal_or_m <span class="sc">+</span> overturned <span class="sc">+</span> cell_phone <span class="sc">+</span> speeding <span class="sc">+</span> aggressive <span class="sc">+</span> driver1617 <span class="sc">+</span> driver65plus</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>             <span class="sc">+</span> pctbachmor <span class="sc">+</span> medhhinc, <span class="at">data =</span> crash_data, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = drinking_d ~ fatal_or_m + overturned + cell_phone + 
+    speeding + aggressive + driver1617 + driver65plus + pctbachmor + 
+    medhhinc, family = "binomial", data = crash_data)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.1945  -0.3693  -0.3471  -0.2731   3.0099  
+
+Coefficients:
+                 Estimate   Std. Error z value             Pr(&gt;|z|)    
+(Intercept)  -2.732506616  0.045875659 -59.563 &lt; 0.0000000000000002 ***
+fatal_or_m    0.814013802  0.083806924   9.713 &lt; 0.0000000000000002 ***
+overturned    0.928921376  0.109166324   8.509 &lt; 0.0000000000000002 ***
+cell_phone    0.029550085  0.197777821   0.149               0.8812    
+speeding      1.538975665  0.080545894  19.107 &lt; 0.0000000000000002 ***
+aggressive   -0.596915946  0.047779238 -12.493 &lt; 0.0000000000000002 ***
+driver1617   -1.280295964  0.293147168  -4.367 0.000012572447127937 ***
+driver65plus -0.774664640  0.095858315  -8.081 0.000000000000000641 ***
+pctbachmor   -0.000370634  0.001296387  -0.286               0.7750    
+medhhinc      0.000002804  0.000001341   2.091               0.0365 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 19036  on 43363  degrees of freedom
+Residual deviance: 18340  on 43354  degrees of freedom
+AIC: 18360
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">cbind</span>(<span class="at">OR =</span> <span class="fu">coef</span>(logit), <span class="fu">confint</span>(logit)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     OR      2.5 %     97.5 %
+(Intercept)  0.06505601 0.05947628 0.07119524
+fatal_or_m   2.25694878 1.90991409 2.65313350
+overturned   2.53177687 2.03462326 3.12242730
+cell_phone   1.02999102 0.68354737 1.48846840
+speeding     4.65981462 3.97413085 5.45020642
+aggressive   0.55050681 0.50101688 0.60423487
+driver1617   0.27795502 0.14774429 0.47109277
+driver65plus 0.46085831 0.37998364 0.55347851
+pctbachmor   0.99962944 0.99707035 1.00215087
+medhhinc     1.00000280 1.00000013 1.00000539</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>logitoutput <span class="ot">&lt;-</span> <span class="fu">summary</span>(logit)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>logitcoeffs <span class="ot">&lt;-</span> logitoutput<span class="sc">$</span>coefficients</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>logitcoeffs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Estimate     Std. Error     z value
+(Intercept)  -2.732506616128 0.045875659265 -59.5633209
+fatal_or_m    0.814013801855 0.083806923855   9.7129660
+overturned    0.928921376176 0.109166323622   8.5092302
+cell_phone    0.029550084767 0.197777821226   0.1494105
+speeding      1.538975665492 0.080545894089  19.1068171
+aggressive   -0.596915945677 0.047779237535 -12.4932079
+driver1617   -1.280295964022 0.293147167807  -4.3674171
+driver65plus -0.774664640320 0.095858315238  -8.0813505
+pctbachmor   -0.000370633604 0.001296386538  -0.2858974
+medhhinc      0.000002804492 0.000001340972   2.0913870
+                                                                                              Pr(&gt;|z|)
+(Intercept)  0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+fatal_or_m   0.000000000000000000000265496694373546263134334977085160289789200760424137115478515625000
+overturned   0.000000000000000017509193098994720030545102495977971557294949889183044433593750000000000
+cell_phone   0.881229720508864278194494090712396427989006042480468750000000000000000000000000000000000
+speeding     0.000000000000000000000000000000000000000000000000000000000000000000000000000000002215783
+aggressive   0.000000000000000000000000000000000008130790694984008205523084988897153380094096064567566
+driver1617   0.000012572447127937271245477074410601403542386833578348159790039062500000000000000000000
+driver65plus 0.000000000000000640534374817719861497020139573521646525477990508079528808593750000000000
+pctbachmor   0.774956667791637965336803972604684531688690185546875000000000000000000000000000000000000
+medhhinc     0.036493383531930247143382217700491310097277164459228515625000000000000000000000000000000</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>or_ci <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">cbind</span>(<span class="at">OR =</span> <span class="fu">coef</span>(logit), <span class="fu">confint</span>(logit)))</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>finallogitoutput <span class="ot">&lt;-</span> <span class="fu">cbind</span>(logitcoeffs, or_ci)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>finallogitoutput</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Estimate     Std. Error     z value
+(Intercept)  -2.732506616128 0.045875659265 -59.5633209
+fatal_or_m    0.814013801855 0.083806923855   9.7129660
+overturned    0.928921376176 0.109166323622   8.5092302
+cell_phone    0.029550084767 0.197777821226   0.1494105
+speeding      1.538975665492 0.080545894089  19.1068171
+aggressive   -0.596915945677 0.047779237535 -12.4932079
+driver1617   -1.280295964022 0.293147167807  -4.3674171
+driver65plus -0.774664640320 0.095858315238  -8.0813505
+pctbachmor   -0.000370633604 0.001296386538  -0.2858974
+medhhinc      0.000002804492 0.000001340972   2.0913870
+                                                                                              Pr(&gt;|z|)
+(Intercept)  0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+fatal_or_m   0.000000000000000000000265496694373546263134334977085160289789200760424137115478515625000
+overturned   0.000000000000000017509193098994720030545102495977971557294949889183044433593750000000000
+cell_phone   0.881229720508864278194494090712396427989006042480468750000000000000000000000000000000000
+speeding     0.000000000000000000000000000000000000000000000000000000000000000000000000000000002215783
+aggressive   0.000000000000000000000000000000000008130790694984008205523084988897153380094096064567566
+driver1617   0.000012572447127937271245477074410601403542386833578348159790039062500000000000000000000
+driver65plus 0.000000000000000640534374817719861497020139573521646525477990508079528808593750000000000
+pctbachmor   0.774956667791637965336803972604684531688690185546875000000000000000000000000000000000000
+medhhinc     0.036493383531930247143382217700491310097277164459228515625000000000000000000000000000000
+                     OR      2.5 %     97.5 %
+(Intercept)  0.06505601 0.05947628 0.07119524
+fatal_or_m   2.25694878 1.90991409 2.65313350
+overturned   2.53177687 2.03462326 3.12242730
+cell_phone   1.02999102 0.68354737 1.48846840
+speeding     4.65981462 3.97413085 5.45020642
+aggressive   0.55050681 0.50101688 0.60423487
+driver1617   0.27795502 0.14774429 0.47109277
+driver65plus 0.46085831 0.37998364 0.55347851
+pctbachmor   0.99962944 0.99707035 1.00215087
+medhhinc     1.00000280 1.00000013 1.00000539</code></pre>
+</div>
+</div>
+<ul>
+<li><ol type="1">
+<li>Interpret the results. Be sure to comment on whether each predictor is significant, and interpret the odds ratio for each predictor.</li>
+</ol></li>
+</ul>
+<!--writings-->
+<ul>
+<li><ol start="2" type="1">
+<li>State whether there is evidence of multicollinearity, and remind the reader how you’re defining multicollinearity.</li>
+</ol></li>
+</ul>
+<!--writings-->
+<ul>
+<li><ol start="2" type="i">
+<li>Using the table on page 7, present the specificity, sensitivity and the misclassification rates for the different probability cut-offs. Indicate the cut-offs which yield the lowest/highest misclassification rates.</li>
+</ol></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> logit<span class="sc">$</span>fitted.values</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.02</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |      2374 |        41 |      2415 | 
+             |     0.058 |     0.016 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |     38505 |      2444 |     40949 | 
+             |     0.942 |     0.984 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.03</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |      2613 |        48 |      2661 | 
+             |     0.064 |     0.019 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |     38266 |      2437 |     40703 | 
+             |     0.936 |     0.981 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.05</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |     19176 |       659 |     19835 | 
+             |     0.469 |     0.265 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |     21703 |      1826 |     23529 | 
+             |     0.531 |     0.735 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.07</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |     37356 |      1935 |     39291 | 
+             |     0.914 |     0.779 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |      3523 |       550 |      4073 | 
+             |     0.086 |     0.221 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.08</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |     38370 |      2026 |     40396 | 
+             |     0.939 |     0.815 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |      2509 |       459 |      2968 | 
+             |     0.061 |     0.185 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.09</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |     38670 |      2067 |     40737 | 
+             |     0.946 |     0.832 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |      2209 |       418 |      2627 | 
+             |     0.054 |     0.168 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.1</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |     38762 |      2077 |     40839 | 
+             |     0.948 |     0.836 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |      2117 |       408 |      2525 | 
+             |     0.052 |     0.164 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.15</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |     39743 |      2226 |     41969 | 
+             |     0.972 |     0.896 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |      1136 |       259 |      1395 | 
+             |     0.028 |     0.104 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.2</span>)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |     40690 |      2428 |     43118 | 
+             |     0.995 |     0.977 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |       189 |        57 |       246 | 
+             |     0.005 |     0.023 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>fit.binary <span class="ot">=</span> (fit<span class="sc">&gt;=</span><span class="fl">0.5</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CrossTable</span>(fit.binary, crash_data<span class="sc">$</span>drinking_d, <span class="at">prop.r =</span> <span class="cn">FALSE</span>, <span class="at">prop.t =</span> <span class="cn">FALSE</span>, <span class="at">prop.chisq =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 
+   Cell Contents
+|-------------------------|
+|                       N |
+|           N / Col Total |
+|-------------------------|
+
+ 
+Total Observations in Table:  43364 
+
+ 
+             | crash_data$drinking_d 
+  fit.binary |         0 |         1 | Row Total | 
+-------------|-----------|-----------|-----------|
+       FALSE |     40875 |      2481 |     43356 | 
+             |     1.000 |     0.998 |           | 
+-------------|-----------|-----------|-----------|
+        TRUE |         4 |         4 |         8 | 
+             |     0.000 |     0.002 |           | 
+-------------|-----------|-----------|-----------|
+Column Total |     40879 |      2485 |     43364 | 
+             |     0.943 |     0.057 |           | 
+-------------|-----------|-----------|-----------|
+
+ </code></pre>
+</div>
+</div>
+<ul>
+<li><ol start="3" type="i">
+<li>Present the ROC curve and comment on the optimal cut-off rate that was selected by minimizing the distance from the upper left corner of the ROC curve.</li>
+</ol></li>
+</ul>
+<ol type="1">
+<li>Compare this cut-off rate with the optimal rate in 3.c.ii above</li>
+</ol>
+<!-- -->
+<ol type="a">
+<li>Keep in mind that in 3.c.ii, we’re looking at minimum mis-classification rates, and here, we’re looking at simultaneously minimizing both sensitivity and specificity.</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3-a </span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ROCR")</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROCR)</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">cbind</span>(crash_data<span class="sc">$</span>drinking_d, fit)</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(a) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"labels"</span>, <span class="st">"predictions"</span>)</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  labels predictions
+1      0  0.06794568
+2      0  0.08305194
+3      0  0.06794568
+4      0  0.03858293
+5      0  0.06794568
+6      1  0.07048039</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>roc <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(a)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(roc<span class="sc">$</span>predictions, roc<span class="sc">$</span>labels)</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>roc.perf <span class="ot">=</span> <span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">"tpr"</span>, <span class="at">x.measure =</span> <span class="st">"fpr"</span>)</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc.perf)</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="musa-500-hmwk-3_files/figure-html/ROC-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3-a </span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>opt.cut <span class="ot">=</span> <span class="cf">function</span>(perf, pred){</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  cut.ind <span class="ot">=</span> <span class="fu">mapply</span>(<span class="at">FUN=</span><span class="cf">function</span>(x, y, p){</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>    d <span class="ot">=</span> (x <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (y<span class="dv">-1</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>    ind <span class="ot">=</span> <span class="fu">which</span>(d <span class="sc">==</span> <span class="fu">min</span>(d))</span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="at">sensitivity =</span> y[[ind]], <span class="at">specificity =</span> <span class="dv">1</span><span class="sc">-</span>x[[ind]], </span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">cutoff =</span> p[[ind]])</span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a>  }, perf<span class="sc">@</span>x.values, perf<span class="sc">@</span>y.values, pred<span class="sc">@</span>cutoffs)</span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-12"><a href="#cb71-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">opt.cut</span>(roc.perf, pred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  [,1]
+sensitivity 0.66076459
+specificity 0.54524328
+cutoff      0.06365151</code></pre>
+</div>
+</div>
+<ul>
+<li><ol start="4" type="i">
+<li>Also present and comment on the area under the ROC curve. What does it tell us about our model?</li>
+</ol></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3-a </span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>auc.perf <span class="ot">=</span> <span class="fu">performance</span>(pred, <span class="at">measure =</span><span class="st">"auc"</span>)</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>auc.perf<span class="sc">@</span>y.values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 0.6398695</code></pre>
+</div>
+</div>
+<ul>
+<li><ol start="22" type="a">
+<li>Finally, present the results of the logistic regression with the binary predictors only (i.e., without PCTBACHMOR and MEDHHINC). 1. Compare the results of this regression with the results of the first regression: are there any predictors which are significant in the new model which weren’t significant in the original one, or vice versa?</li>
+</ol></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3-a </span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>logit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(drinking_d <span class="sc">~</span> fatal_or_m <span class="sc">+</span> overturned <span class="sc">+</span> cell_phone <span class="sc">+</span> speeding <span class="sc">+</span> aggressive <span class="sc">+</span> driver1617 <span class="sc">+</span> driver65plus</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>            , <span class="at">data =</span> crash_data, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = drinking_d ~ fatal_or_m + overturned + cell_phone + 
+    speeding + aggressive + driver1617 + driver65plus, family = "binomial", 
+    data = crash_data)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.1961  -0.3692  -0.3153  -0.2764   3.0093  
+
+Coefficients:
+             Estimate Std. Error z value             Pr(&gt;|z|)    
+(Intercept)  -2.65190    0.02753 -96.324 &lt; 0.0000000000000002 ***
+fatal_or_m    0.80932    0.08376   9.662 &lt; 0.0000000000000002 ***
+overturned    0.93978    0.10903   8.619 &lt; 0.0000000000000002 ***
+cell_phone    0.03107    0.19777   0.157                0.875    
+speeding      1.54032    0.08053  19.128 &lt; 0.0000000000000002 ***
+aggressive   -0.59365    0.04775 -12.433 &lt; 0.0000000000000002 ***
+driver1617   -1.27158    0.29311  -4.338  0.00001436374143293 ***
+driver65plus -0.76646    0.09576  -8.004  0.00000000000000121 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 19036  on 43363  degrees of freedom
+Residual deviance: 18344  on 43356  degrees of freedom
+AIC: 18360
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">cbind</span>(<span class="at">OR =</span> <span class="fu">coef</span>(logit2), <span class="fu">confint</span>(logit2)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     OR      2.5 %    97.5 %
+(Intercept)  0.07051713 0.06678642 0.0743978
+fatal_or_m   2.24636998 1.90112455 2.6404533
+overturned   2.55942903 2.05736015 3.1556897
+cell_phone   1.03156149 0.68459779 1.4907150
+speeding     4.66608472 3.97961862 5.4573472
+aggressive   0.55230941 0.50268818 0.6061758
+driver1617   0.28038936 0.14904734 0.4751771
+driver65plus 0.46465631 0.38318289 0.5579332</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>logitoutput2 <span class="ot">&lt;-</span> <span class="fu">summary</span>(logit2)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>logitcoeffs2 <span class="ot">&lt;-</span> logitoutput2<span class="sc">$</span>coefficients</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>logitcoeffs2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Estimate Std. Error     z value
+(Intercept)  -2.65189961 0.02753107 -96.3238683
+fatal_or_m    0.80931557 0.08376150   9.6621431
+overturned    0.93978420 0.10903433   8.6191585
+cell_phone    0.03107367 0.19777088   0.1571195
+speeding      1.54032033 0.08052787  19.1277908
+aggressive   -0.59364687 0.04774781 -12.4329656
+driver1617   -1.27157607 0.29310969  -4.3382260
+driver65plus -0.76645727 0.09576440  -8.0035718
+                                                                                             Pr(&gt;|z|)
+(Intercept)  0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+fatal_or_m   0.00000000000000000000043663270416796089966326999132206765352748334407806396484375000000
+overturned   0.00000000000000000674479490423146321037561889966127637308090925216674804687500000000000
+cell_phone   0.87515064024584299229303496758802793920040130615234375000000000000000000000000000000000
+speeding     0.00000000000000000000000000000000000000000000000000000000000000000000000000000000148224
+aggressive   0.00000000000000000000000000000000001730915657124955061131957312348106370336608961224556
+driver1617   0.00001436374143293184440627746623064808773051481693983078002929687500000000000000000000
+driver65plus 0.00000000000000120861170055062276218298122909544645153800956904888153076171875000000000</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>or_ci2 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">cbind</span>(<span class="at">OR =</span> <span class="fu">coef</span>(logit2), <span class="fu">confint</span>(logit2)))</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>finallogitoutput2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(logitcoeffs2, or_ci2)</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>finallogitoutput2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Estimate Std. Error     z value
+(Intercept)  -2.65189961 0.02753107 -96.3238683
+fatal_or_m    0.80931557 0.08376150   9.6621431
+overturned    0.93978420 0.10903433   8.6191585
+cell_phone    0.03107367 0.19777088   0.1571195
+speeding      1.54032033 0.08052787  19.1277908
+aggressive   -0.59364687 0.04774781 -12.4329656
+driver1617   -1.27157607 0.29310969  -4.3382260
+driver65plus -0.76645727 0.09576440  -8.0035718
+                                                                                             Pr(&gt;|z|)
+(Intercept)  0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+fatal_or_m   0.00000000000000000000043663270416796089966326999132206765352748334407806396484375000000
+overturned   0.00000000000000000674479490423146321037561889966127637308090925216674804687500000000000
+cell_phone   0.87515064024584299229303496758802793920040130615234375000000000000000000000000000000000
+speeding     0.00000000000000000000000000000000000000000000000000000000000000000000000000000000148224
+aggressive   0.00000000000000000000000000000000001730915657124955061131957312348106370336608961224556
+driver1617   0.00001436374143293184440627746623064808773051481693983078002929687500000000000000000000
+driver65plus 0.00000000000000120861170055062276218298122909544645153800956904888153076171875000000000
+                     OR      2.5 %    97.5 %
+(Intercept)  0.07051713 0.06678642 0.0743978
+fatal_or_m   2.24636998 1.90112455 2.6404533
+overturned   2.55942903 2.05736015 3.1556897
+cell_phone   1.03156149 0.68459779 1.4907150
+speeding     4.66608472 3.97961862 5.4573472
+aggressive   0.55230941 0.50268818 0.6061758
+driver1617   0.28038936 0.14904734 0.4751771
+driver65plus 0.46465631 0.38318289 0.5579332</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Be sure to also present the Akaike Information Criterion (AIC) for both models and indicate which model is better.</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(logit, logit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       df      AIC
+logit  10 18359.63
+logit2  8 18360.47</code></pre>
+</div>
+</div>
 <p>We can also say that a 1 unit increase in the predictor corresponds to a 〖(𝑒〗^(𝛽_1 )−1)∗100% change in the odds of Y=1. In the current example, we could say that when Population increases by 1 person, the odds of there being a hospital in the zip code goes up by (1.001−1)∗100%=0.1%.</p>
 <p>What if 𝛽_1&lt;0 (i.e., there’s a negative association between the dependent variable and the predictor)? In our example above, if 𝛽_1=−0.1, we could say that the odds of there being a hospital in a zip code changes (i.e., decreases) by a factor of 𝑒^(𝛽_1 )=𝑒^(−0.1)=0.9 as population increases by 1.</p>
 <p>What happens when 𝛽_1=0? Intuitively, it means that the predictor has no effect on the dependent variable. (Later we will see that this corresponds to an odds ratio of 𝑒^0=1.)</p>
@@ -613,6 +1577,26 @@ x       0     1
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<ul>
+<li><ol type="a">
+<li>In a couple sentences, recap what you did in the paper, and your findings.</li>
+</ol></li>
+<li><ol type="i">
+<li>Which variables are strong predictors of crashes that involve drunk driving? Which variables aren’t associated with the dependent variable?</li>
+</ol></li>
+<li><ol start="2" type="i">
+<li>Are the results surprising? Discuss, and mention whether the variables you expect to be significant actually are significant, and if so, whether the relationships with the dependent variable are in the direction you would expect.</li>
+</ol></li>
+<li><ol start="3" type="i">
+<li>Is logistic regression appropriate here? In other words, would the modeling rare events methods proposed by Paul Allison be more appropriate here?</li>
+</ol></li>
+<li><ol type="1">
+<li>Hint: look at the # and % of cases with values of ‘1’ for the dependent variable.</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>What are some limitations of the analysis? Discuss.</li>
+</ol></li>
+</ul>
 <section id="recap" class="level3">
 <h3 class="anchored" data-anchor-id="recap">Recap</h3>
 </section>
@@ -621,7 +1605,15 @@ x       0     1
 </section>
 </section>
 
-</main>
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Sperandei S. Understanding logistic regression analysis. Biochem Med (Zagreb). 2014 Feb 15;24(1):12-8. doi: 10.11613/BM.2014.003. PMID: 24627710; PMCID: PMC3936971.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://en.wikipedia.org/wiki/Akaike_information_criterion<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://www.sciencedirect.com/topics/social-sciences/akaike-information-criterion<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
