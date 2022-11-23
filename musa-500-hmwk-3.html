@@ -288,7 +288,12 @@ background: #18bc9c;
 <p>Finally, in assessing the quality of our model, we can consider <em>specificity</em>, <em>sensitivity</em>, and the <em>misclassification rate</em>.</p>
 <p>Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate. Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate. The misclassification rate is the proportion of the sum of false positives and false negatives out of the total number of observations in the sample.</p>
 <p>To assess the quality of our model using these three measures, we can plot the true positive rate (sensitivity) against the false positive rate (specificity), as in Figure 1. Ideally, we want to see a high true positive rate and a low false positive rate.</p>
-<p><img src="File:Roccurves.png" class="img-fluid" alt="Figure 1: ROC Curve Example">](https://en.wikipedia.org/wiki/Receiver_operating_characteristic#/media)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/nlebovits/musa-500-hmwk-3/blob/main/Roc_curve.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure 1: ROC Curve Example</figcaption><p></p>
+</figure>
+</div>
 <ul>
 <li><ol start="3" type="i">
 <li>Explain what is meant by specificity, sensitivity and the misclassification rate, and describe how each quantity is calculated. Are higher or lower values of each quantity better or worse? In your explanation, be sure to mention about how fitted (predicted) values of y, i.e., y ̂, are calculated and interpreted in logistic regression. Indicate why you should try using different cut-offs for what is considered a “high” probability of Y=1 when calculating the specificity, sensitivity and the misclassification rate. Explain what the ROC curve is. Be sure to talk about some methods for calculating the optimal cut-off using the ROC curve, and specify which one you will be using in this report. Also, explain what we get by calculating the area under the ROC curve, and what might be value ranges for excellent, good, fair, poor and failing models.</li>

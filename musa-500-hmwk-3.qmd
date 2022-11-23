@@ -69,54 +69,41 @@ Even though the original data set has a total of 53,260 car crashes, for the sak
 
 Let's begin by recalling the five assumptions of OLS regression:
 
- 1. A linear relationship between the dependent variable and predictors
- 2. Normality of residuals
- 3. Homoscedasticity
- 4. Independence of observations (no spatial, temporal or other forms of dependence in the data)
- 5. No multicollinearity
+1.  A linear relationship between the dependent variable and predictors
+2.  Normality of residuals
+3.  Homoscedasticity
+4.  Independence of observations (no spatial, temporal or other forms of dependence in the data)
+5.  No multicollinearity
 
-Additionally, OLS regression relies on continuous variables. In this assignment,
-we are dealing with binary variables as well as continuous variables, so regular
-OLS regression is inappropriate.
+Additionally, OLS regression relies on continuous variables. In this assignment, we are dealing with binary variables as well as continuous variables, so regular OLS regression is inappropriate.
 
 ### Logistic Regression
 
 #### Assumptions of Logistic Regression
 
-Instead of OLS regression, we will use an approach known as logistic regression.
-The assumptions of logistic regression are similar to the assumptions in OLS regression,
-but not identical. In logistic regression:
+Instead of OLS regression, we will use an approach known as logistic regression. The assumptions of logistic regression are similar to the assumptions in OLS regression, but not identical. In logistic regression:
 
- 1. The dependent variable must be binary
- 2. Observations must be independent
- 3. There must not be multicollinearity
+1.  The dependent variable must be binary
+2.  Observations must be independent
+3.  There must not be multicollinearity
 
-We will also need a larger sample size than in OLS because in logistic regression
-we rely on maximum likelihood estimation. Logistic regression also differs from OLS
-in that:
+We will also need a larger sample size than in OLS because in logistic regression we rely on maximum likelihood estimation. Logistic regression also differs from OLS in that:
 
- 1. There's no assumption of a linear relationship between the DV and each IV
- 2. There's no assumption of hetereoscedasticity
- 3. Residuals do not need to be normally distributed
+1.  There's no assumption of a linear relationship between the DV and each IV
+2.  There's no assumption of hetereoscedasticity
+3.  Residuals do not need to be normally distributed
 
 #### Odds and Odds Ratios
 
-In order to understand logistic regression, we must first review the concept of
-*odds*.
+In order to understand logistic regression, we must first review the concept of *odds*.
 
-Odds are similar to probability. However, while probability may be calculated
-as $\frac{\text{\# desirable outcomes}}{\text{\# possible outcomes}}$, odds are 
-calculated as $\frac{\text{\# desirable outcomes}}{\text{\# undesirable outcomes}}$.
+Odds are similar to probability. However, while probability may be calculated as $\frac{\text{\# desirable outcomes}}{\text{\# possible outcomes}}$, odds are calculated as $\frac{\text{\# desirable outcomes}}{\text{\# undesirable outcomes}}$.
 
-The log odds that $Y = 1$ (or the *logit*) are simply $ln(Odds(Y = 1))$. In other words,
-if $Y$ is our dependent variable and $X$ is our independent variable, a 1-unit
-increase in $X$ means that the odds that $Y=1$ go up by $e^\text{ln(Odds(Y = 1))}$.
+The log odds that $Y = 1$ (or the *logit*) are simply $ln(Odds(Y = 1))$. In other words, if $Y$ is our dependent variable and $X$ is our independent variable, a 1-unit increase in $X$ means that the odds that $Y=1$ go up by $e^\text{ln(Odds(Y = 1))}$.
 
-The *odds ratio* is the ratio of the odds of one outcome for our binary dependent
-variable versus the other possible outcome, or $\frac{\text{Odds(Y=1)}}{\text{Odds(Y=0)}}$. It can also be calculated by exponentiating
-the coefficient of the independent variable in question. The odds ratio indicates
-how much more likely we are to see $Y=1$ than $Y=0$, e.g., an odds ratio of 3
-means that it is 3 times more likely that $Y=1$ than that $Y=0$.^[Sperandei S. Understanding logistic regression analysis. Biochem Med (Zagreb). 2014 Feb 15;24(1):12-8. doi: 10.11613/BM.2014.003. PMID: 24627710; PMCID: PMC3936971.] Rather than looking at the estimated $\beta$ coefficients, most statisticians prefer to look at odds ratios
+The *odds ratio* is the ratio of the odds of one outcome for our binary dependent variable versus the other possible outcome, or $\frac{\text{Odds(Y=1)}}{\text{Odds(Y=0)}}$. It can also be calculated by exponentiating the coefficient of the independent variable in question. The odds ratio indicates how much more likely we are to see $Y=1$ than $Y=0$, e.g., an odds ratio of 3 means that it is 3 times more likely that $Y=1$ than that $Y=0$.[^1] Rather than looking at the estimated $\beta$ coefficients, most statisticians prefer to look at odds ratios
+
+[^1]: Sperandei S. Understanding logistic regression analysis. Biochem Med (Zagreb). 2014 Feb 15;24(1):12-8. doi: 10.11613/BM.2014.003. PMID: 24627710; PMCID: PMC3936971.
 
 #### Equation for the Logistic Regression and Multivariate Logistic Regression
 
@@ -136,41 +123,52 @@ For multivariate logistic regression with $n$ predictors, that equation becomes 
 
 As explained above, we can say that $e^{\beta_1}$ is the extent to which the odds of $Y=1$ change as the predictor (i.e., Population) increases by 1 unit. So, when $e^{\beta_1} = 1.001$, 1.001 is the extent to which the odds that $Y=1$ go up as the independent variable $X$ increases by 1 unit. If we want to examine the extent to which the odds that $Y=1$ change as X increases by 100 units, we can simply raise $e$ to $100*\beta_1$, so $e^{100*\beta_1}$. If $\beta_1 < 0$, we would say that the odds that $Y=1$ *decrease* by a factor of $e^{\beta_1}$ as X *increases* by 1 unit. If $\beta_1 = 0$, then the predictor has *no effect* on the dependent variable.
 
-For each predictor $X_i$: 
+For each predictor $X_i$:
 
- - $H_0:\beta_i = 0 \hspace{1mm} (OR_i = 1)$
- - $H_a:\beta_i \neq 0 \hspace{1mm} (OR_i \neq 1)$
- 
+-   $H_0:\beta_i = 0 \hspace{1mm} (OR_i = 1)$
+-   $H_a:\beta_i \neq 0 \hspace{1mm} (OR_i \neq 1)$
+
 Within the context of logistic regression, the z-score is equal to $\frac{\hat{\beta_i}}{\sigma\hat{\beta_i}}$, which is normally distributed. This is also sometimes known as the *Wald statistic*, and yields a p-value for each term in the regression using the standard normal (z) tables and in the R output.
 
 ### Assessing Quality of Model Fit
 
 With logistic regression, it is possible to calculate an $R^2$ value and, generally speaking, the higher the $R^2$, the better. However, this value is rarely used, as it cannot be interpreted as the percent of variance that is explained by the model.
 
-Instead, we can use the Akaike Information Criterion to compare models. The AIC estimates prediction error, and therefore the quality of our model, and includes a penality that "is an increasing function of the number of estimated parameters".^[https://en.wikipedia.org/wiki/Akaike_information_criterion]  When comparing multiple models, "the one with the minimum AIC value assures a good balance of goodness of fit and complexity".^[https://www.sciencedirect.com/topics/social-sciences/akaike-information-criterion]
+Instead, we can use the Akaike Information Criterion to compare models. The AIC estimates prediction error, and therefore the quality of our model, and includes a penality that "is an increasing function of the number of estimated parameters".[^2] When comparing multiple models, "the one with the minimum AIC value assures a good balance of goodness of fit and complexity".[^3]
+
+[^2]: https://en.wikipedia.org/wiki/Akaike_information_criterion
+
+[^3]: https://www.sciencedirect.com/topics/social-sciences/akaike-information-criterion
 
 Finally, in assessing the quality of our model, we can consider *specificity*, *sensitivity*, and the *misclassification rate*.
 
 Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate. Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate. The misclassification rate is the proportion of the sum of false positives and false negatives out of the total number of observations in the sample.
 
-To assess the quality of our model using these three measures, we can plot the true positive rate (sensitivity) against the false positive rate (specificity), as in Figure 1. Ideally, we want to see a high true positive rate and a low false positive rate. 
+To assess the quality of our model using these three measures, we can plot the true positive rate (sensitivity) against the false positive rate (specificity), as in Figure 1. Ideally, we want to see a high true positive rate and a low false positive rate.
 
-![Figure 1: ROC Curve Example](File:Roccurves.png)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic#/media)
+![Figure 1: ROC Curve Example](https://github.com/nlebovits/musa-500-hmwk-3/blob/main/Roc_curve.svg)
 
+-   
 
--   iii. Explain what is meant by specificity, sensitivity and the misclassification rate, and describe how each quantity is calculated. Are higher or lower values of each quantity better or worse? In your explanation, be sure to mention about how fitted (predicted) values of y, i.e., y ̂, are calculated and interpreted in logistic regression.  Indicate why you should try using different cut-offs for what is considered a “high” probability of Y=1 when calculating the specificity, sensitivity and the misclassification rate.  Explain what the ROC curve is. Be sure to talk about some methods for calculating the optimal cut-off using the ROC curve, and specify which one you will be using in this report. Also, explain what we get by calculating the area under the ROC curve, and what might be value ranges for excellent, good, fair, poor and failing models.
+    iii. Explain what is meant by specificity, sensitivity and the misclassification rate, and describe how each quantity is calculated. Are higher or lower values of each quantity better or worse? In your explanation, be sure to mention about how fitted (predicted) values of y, i.e., y ̂, are calculated and interpreted in logistic regression. Indicate why you should try using different cut-offs for what is considered a "high" probability of Y=1 when calculating the specificity, sensitivity and the misclassification rate. Explain what the ROC curve is. Be sure to talk about some methods for calculating the optimal cut-off using the ROC curve, and specify which one you will be using in this report. Also, explain what we get by calculating the area under the ROC curve, and what might be value ranges for excellent, good, fair, poor and failing models.
 
 ### Exploratory Analysis Prior to Regression
 
--   i.  Talk about running the cross-tabulations between the dependent variable and binary predictors to see whether there is an association between the two variables. 1. Say that the appropriate statistical test for examining the association between two categorical variables is the Chi-Square test (described above on pp. 4-5 of this document). a. Be sure to mention the null and alternative hypotheses for the test.
+-   
 
--   ii. Also state that we can compare the means of continuous predictors for both values of the dependent variable. 1. Say that the independent samples t-tests (described above on pp. 5-6 of this document) are the appropriate statistical tests for examining whether there were significant differences in mean values of PCTBACHMOR and MEDHHINC for crashes that involved alcohol and those that didn't. a. Mention the null and alternative hypotheses for the t-test.
+    i.  Talk about running the cross-tabulations between the dependent variable and binary predictors to see whether there is an association between the two variables. 1. Say that the appropriate statistical test for examining the association between two categorical variables is the Chi-Square test (described above on pp. 4-5 of this document). a. Be sure to mention the null and alternative hypotheses for the test.
+
+-   
+
+    ii. Also state that we can compare the means of continuous predictors for both values of the dependent variable. 1. Say that the independent samples t-tests (described above on pp. 5-6 of this document) are the appropriate statistical tests for examining whether there were significant differences in mean values of PCTBACHMOR and MEDHHINC for crashes that involved alcohol and those that didn't. a. Mention the null and alternative hypotheses for the t-test.
 
 ## Results
 
 ### Findings from Exploratory Analysis
 
--  i.  Present the tabulation of the dependent variable and comment on the number and proportion of crashes that involves drunk driving.
+-   
+
+    i.  Present the tabulation of the dependent variable and comment on the number and proportion of crashes that involves drunk driving.
 
 ```{r dependent variable}
 
@@ -194,7 +192,9 @@ kable(DV_table, caption = "<center><span style='font-size:14px; color:black; fon
 
 ```
 
--   ii. Present the cross-tabulation of the dependent variable with each of the binary predictors (table on p. 4 above). 1. In the table, add (an) extra column(s) which presents the results of the Chi-Square test (you may present the p-value only, or the Chi-Square statistic, the degrees of freedom and the p-value).
+-   
+
+    ii. Present the cross-tabulation of the dependent variable with each of the binary predictors (table on p. 4 above). 1. In the table, add (an) extra column(s) which presents the results of the Chi-Square test (you may present the p-value only, or the Chi-Square statistic, the degrees of freedom and the p-value).
 
 ```{r cross-tabulation}
 
@@ -212,7 +212,9 @@ CrossTable(crash_data$driver65plus, crash_data$drinking_d, prop.r = FALSE, prop.
 
 <!--writings-->
 
--  iii. Present the means of the continuous predictors for both values of the dependent variable (table on p. 5). 1. In the table, add an extra column which presents the results of the independent samples t-test (you may present the p-value only, or the t-statistic, the degrees of freedom and the p-value).
+-   
+
+    iii. Present the means of the continuous predictors for both values of the dependent variable (table on p. 5). 1. In the table, add an extra column which presents the results of the independent samples t-test (you may present the p-value only, or the t-statistic, the degrees of freedom and the p-value).
 
 ```{r means by group}
 
@@ -227,13 +229,17 @@ t.test(crash_data$medhhinc~crash_data$drinking_d)
 
 ```
 
--  2.  Discuss whether the t-test shows that there is a significant association between the dependent variable and each of the continuous predictors (i.e., can you reject the Null Hypothesis?).
+-   
+
+    2.  Discuss whether the t-test shows that there is a significant association between the dependent variable and each of the continuous predictors (i.e., can you reject the Null Hypothesis?).
 
 <!--writings-->
 
 ### Assumptions of Logistic Regression
 
--  i.  In particular, be sure to present the matrix showing the pairwise Pearson correlations for all the binary and continuous predictors. 1. Comment on any potential limitations of using Pearson correlations to measure the associations between binary predictors.
+-   
+
+    i.  In particular, be sure to present the matrix showing the pairwise Pearson correlations for all the binary and continuous predictors. 1. Comment on any potential limitations of using Pearson correlations to measure the associations between binary predictors.
 
 ```{r multicollinearlity check}
 
@@ -253,7 +259,9 @@ corrplot(mc_test, method = "square",type = "lower",tl.cex = 0.5)
 
 ### Logistic Regression Results
 
--  i.  First, present the results of the logistic regression with all predictors (FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC).
+-   
+
+    i.  First, present the results of the logistic regression with all predictors (FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC).
 
 ```{r regression model}
 
@@ -276,15 +284,21 @@ finallogitoutput
 
 ```
 
-- 1.  Interpret the results. Be sure to comment on whether each predictor is significant, and interpret the odds ratio for each predictor.
+-   
+
+    1.  Interpret the results. Be sure to comment on whether each predictor is significant, and interpret the odds ratio for each predictor.
 
 <!--writings-->
 
-- 2.  State whether there is evidence of multicollinearity, and remind the reader how you're defining multicollinearity.
+-   
+
+    2.  State whether there is evidence of multicollinearity, and remind the reader how you're defining multicollinearity.
 
 <!--writings-->
 
-- ii. Using the table on page 7, present the specificity, sensitivity and the misclassification rates for the different probability cut-offs. Indicate the cut-offs which yield the lowest/highest misclassification rates.
+-   
+
+    ii. Using the table on page 7, present the specificity, sensitivity and the misclassification rates for the different probability cut-offs. Indicate the cut-offs which yield the lowest/highest misclassification rates.
 
 ```{r sensitivity, specificity}
 
@@ -322,13 +336,14 @@ CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, pr
 
 ```
 
-- iii. Present the ROC curve and comment on the optimal cut-off rate that was selected by minimizing the distance from the upper left corner of the ROC curve.
+-   
+
+    iii. Present the ROC curve and comment on the optimal cut-off rate that was selected by minimizing the distance from the upper left corner of the ROC curve.
 
 1.  Compare this cut-off rate with the optimal rate in 3.c.ii above
 
-```{=html}
 <!-- -->
-```
+
 a.  Keep in mind that in 3.c.ii, we're looking at minimum mis-classification rates, and here, we're looking at simultaneously minimizing both sensitivity and specificity.
 
 ```{r ROC}
@@ -367,7 +382,9 @@ print(opt.cut(roc.perf, pred))
 
 ```
 
-- iv. Also present and comment on the area under the ROC curve. What does it tell us about our model?
+-   
+
+    iv. Also present and comment on the area under the ROC curve. What does it tell us about our model?
 
 ```{r calculate AUC}
 
@@ -378,7 +395,9 @@ auc.perf@y.values
 
 ```
 
-- v.  Finally, present the results of the logistic regression with the binary predictors only (i.e., without PCTBACHMOR and MEDHHINC). 1. Compare the results of this regression with the results of the first regression: are there any predictors which are significant in the new model which weren't significant in the original one, or vice versa?
+-   
+
+    v.  Finally, present the results of the logistic regression with the binary predictors only (i.e., without PCTBACHMOR and MEDHHINC). 1. Compare the results of this regression with the results of the first regression: are there any predictors which are significant in the new model which weren't significant in the original one, or vice versa?
 
 ```{r regression model2}
 
@@ -444,17 +463,29 @@ Similar to OLS, we can do cross-validation to determine a quality of the model. 
 
 ## Discussion
 
-- a)  In a couple sentences, recap what you did in the paper, and your findings.
+-   
 
-- i.  Which variables are strong predictors of crashes that involve drunk driving? Which variables aren't associated with the dependent variable?
+    a)  In a couple sentences, recap what you did in the paper, and your findings.
 
-- ii. Are the results surprising? Discuss, and mention whether the variables you expect to be significant actually are significant, and if so, whether the relationships with the dependent variable are in the direction you would expect.
+-   
 
-- iii. Is logistic regression appropriate here? In other words, would the modeling rare events methods proposed by Paul Allison be more appropriate here?
+    i.  Which variables are strong predictors of crashes that involve drunk driving? Which variables aren't associated with the dependent variable?
 
-- 1.  Hint: look at the \# and % of cases with values of '1' for the dependent variable.
+-   
 
-- b)  What are some limitations of the analysis? Discuss.
+    ii. Are the results surprising? Discuss, and mention whether the variables you expect to be significant actually are significant, and if so, whether the relationships with the dependent variable are in the direction you would expect.
+
+-   
+
+    iii. Is logistic regression appropriate here? In other words, would the modeling rare events methods proposed by Paul Allison be more appropriate here?
+
+-   
+
+    1.  Hint: look at the \# and % of cases with values of '1' for the dependent variable.
+
+-   
+
+    b)  What are some limitations of the analysis? Discuss.
 
 ### Recap
 
