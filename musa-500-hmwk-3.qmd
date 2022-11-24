@@ -42,6 +42,11 @@ library(aod)
 library(rms)
 library(gmodels)
 
+library(ROCR)
+
+library(crosstable)
+library(flextable)
+
 #knitr::opts_knit$set(root.dir = "C:/Users/Nissim/Desktop/Fall 2022/Spat Stats/Homeworks/musa-500-hmwk-3")
 
 #import data
@@ -99,7 +104,7 @@ In order to understand logistic regression, we must first review the concept of 
 
 Odds are similar to probability. However, while probability may be calculated as $\frac{\text{\# desirable outcomes}}{\text{\# possible outcomes}}$, odds are calculated as $\frac{\text{\# desirable outcomes}}{\text{\# undesirable outcomes}}$.
 
-![Definitely how odds work](https://www.smbc-comics.com/comics/1482164544-20161219.png){width=50%}
+![Technically, it's the *probability* of being murdered by a serial killer](https://www.smbc-comics.com/comics/1482164544-20161219.png){width=50%}
 
 The log odds that $Y = 1$ (or the *logit*) are simply $ln(Odds(Y = 1))$. In other words, if $Y$ is our dependent variable and $X$ is our independent variable, a 1-unit increase in $X$ means that the odds that $Y=1$ go up by $e^\text{ln(Odds(Y = 1))}$.
 
@@ -177,81 +182,93 @@ Additionally, we can compare the means of the *continuous* predictors in our mod
 
 ### Findings from Exploratory Analysis
 
--   
-
-    i.  Present the tabulation of the dependent variable and comment on the number and proportion of crashes that involves drunk driving.
+#### Distribution of Dependent Variable
+To begin our data exploration, we'll consider the distribution of our dependent variable. As we can see, from our prop table, crashes in which the driver were drunk account for only 5.7% of all 43,364 crashes between 2008 and 2012.
 
 ```{r dependent variable}
 
 drinking_d_table = table(crash_data$drinking_d)
-prop.table(drinking_d_table)
-
-as.data.frame(drinking_d_table)
-as.data.frame(prop.table(drinking_d_table))
 
 DV_table <- left_join(as.data.frame(drinking_d_table), as.data.frame(prop.table(drinking_d_table)), by = "Var1") %>%
   mutate(Var1 = case_when(Var1 == 0 ~ "Non-drunk",
                           Var1 == 1 ~ "Drunk"),
          Freq.y = round(Freq.y, 3))
 
-DV_table
-
-kable(DV_table, caption = "<center><span style='font-size:14px; color:black; font-family: Arial'>Table 2-1-1. tabulation of the dependent variable</span></center>",
+kable(DV_table, caption = "<center><span style='font-size:14px; color:black; font-family: Arial'>Table 2-1-1. Tabulation of the Dependent Variable</span></center>",
       col.names = c("Driver Status", "Count", "Proportion"), align = "c") %>% 
     kable_minimal(full_width = T, html_font = "Arial", font_size = 14) %>%
     row_spec(0:2, extra_css = "line-height: 30px")
 
 ```
 
--   
-
-    ii. Present the cross-tabulation of the dependent variable with each of the binary predictors (table on p. 4 above). 1. In the table, add (an) extra column(s) which presents the results of the Chi-Square test (you may present the p-value only, or the Chi-Square statistic, the degrees of freedom and the p-value).
-
-```{r cross-tabulation}
+#### Cross-Tabulations with Binary Predictors
+Next, we'll look at the cross-tabulations of our dependent variable with each of the binary predictors to evaluate whether the Chi-squared test indicates a statistically significant relationship.
+```{r cross tabulation}
+#| tbl-cap: "Cross-Tabulations"
 #| column: screen-inset-shaded
 #| layout-nrow: 4
 
-CrossTable(crash_data$fatal_or_m, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+crosstable(crash_data, fatal_or_m, by = drinking_d, funs = "mean", test = TRUE) %>% 
+  as_flextable()
 
-CrossTable(crash_data$overturned, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+crosstable(crash_data, overturned, by = drinking_d, funs = "mean", test = TRUE) %>% 
+  as_flextable()
 
-CrossTable(crash_data$cell_phone, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+crosstable(crash_data, cell_phone, by = drinking_d, funs = "mean", test = TRUE) %>% 
+  as_flextable()
 
-CrossTable(crash_data$speeding, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+crosstable(crash_data, speeding, by = drinking_d, funs = "mean", test = TRUE) %>% 
+  as_flextable()
 
-CrossTable(crash_data$aggressive, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+crosstable(crash_data, aggressive, by = drinking_d, funs = "mean", test = TRUE) %>% 
+  as_flextable()
 
-CrossTable(crash_data$driver1617, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+crosstable(crash_data, driver1617, by = drinking_d, funs = "mean", test = TRUE) %>% 
+  as_flextable()
 
-CrossTable(crash_data$driver65plus, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+crosstable(crash_data, driver65plus, by = drinking_d, funs = "mean", test = TRUE) %>% 
+  as_flextable()
+
+#CrossTable(crash_data$fatal_or_m, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+
+#CrossTable(crash_data$overturned, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+
+#CrossTable(crash_data$cell_phone, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+
+#CrossTable(crash_data$speeding, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+
+#CrossTable(crash_data$aggressive, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+
+#CrossTable(crash_data$driver1617, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
+
+#CrossTable(crash_data$driver65plus, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE, chisq = TRUE)
 ```
 
--2. Discuss whether the Chi-Square test shows that there is a significant association between the dependent variable and each of the binary predictors (i.e., can you reject the Null Hypothesis?).
+As we can see based on these cross-tabulations, the Chi-squared test shows a high $\chi^2$ and a p-value \< 0.05 for the dependent variable and each of the binary predictors except for CELL_PHONE. For all variables except for CELL_PHONE, then, we can reject $H_0$, which, as we stated before, states that there is that the probability of a crash involving a drunk driver is no different whether our predictor = 1 or = 0. In other words, we can reject the hypothesis that there is *no* relationship between the dependent variable and all of the predictors *other than CELL_PHONE*.
 
-<!--writings-->
-
--   
+#### Comparing Means of Continuous Variables
 
     iii. Present the means of the continuous predictors for both values of the dependent variable (table on p. 5). 1. In the table, add an extra column which presents the results of the independent samples t-test (you may present the p-value only, or the t-statistic, the degrees of freedom and the p-value).
 
 ```{r means by group}
+means = c(tapply(crash_data$pctbachmor, crash_data$drinking_d, mean), tapply(crash_data$medhhinc, crash_data$drinking_d, mean))
+sds = c(tapply(crash_data$pctbachmor, crash_data$drinking_d, sd), tapply(crash_data$medhhinc, crash_data$drinking_d, sd))
 
-tapply(crash_data$pctbachmor, crash_data$drinking_d, mean)
-tapply(crash_data$pctbachmor, crash_data$drinking_d, sd)
+contvars_df = as.data.frame(rbind(means, sds)) 
 
-tapply(crash_data$medhhinc, crash_data$drinking_d, mean)
-tapply(crash_data$medhhinc, crash_data$drinking_d, sd)
+colnames(contvars_df) = c("PCTBACHMOR 0", "PCTBACHMOR 1", "MEDHHINC 0", "MEDHHINC 1")
 
-t.test(crash_data$pctbachmor~crash_data$drinking_d)
-t.test(crash_data$medhhinc~crash_data$drinking_d)
-
+contvars_df
 ```
 
--   
-
-    2.  Discuss whether the t-test shows that there is a significant association between the dependent variable and each of the continuous predictors (i.e., can you reject the Null Hypothesis?).
-
-<!--writings-->
+#### T-Tests for Continuous Predictors
+Discuss whether the t-test shows that there is a significant association between the dependent variable and each of the continuous predictors (i.e., can you reject the Null Hypothesis?).
+```{r ttests}
+#| column: screen-inset-shaded
+#| layout-nrow: 1
+t.test(crash_data$pctbachmor~crash_data$drinking_d)
+t.test(crash_data$medhhinc~crash_data$drinking_d)
+```
 
 ### Assumptions of Logistic Regression
 
@@ -319,6 +336,9 @@ finallogitoutput
     ii. Using the table on page 7, present the specificity, sensitivity and the misclassification rates for the different probability cut-offs. Indicate the cut-offs which yield the lowest/highest misclassification rates.
 
 ```{r sensitivity, specificity}
+#| tbl-cap: "Cross-Tabulations, Fit Binary"
+#| column: screen-inset-shaded
+#| layout-nrow: 4
 
 fit <- logit$fitted.values
 
@@ -367,9 +387,6 @@ a.  Keep in mind that in 3.c.ii, we're looking at minimum mis-classification rat
 ```{r ROC}
 
 #3-a 
-
-#install.packages("ROCR")
-library(ROCR)
 
 a <- cbind(crash_data$drinking_d, fit)
 colnames(a) <- c("labels", "predictions")
@@ -446,36 +463,6 @@ finallogitoutput2
 AIC(logit, logit2)
 
 ```
-
-We can also say that a 1 unit increase in the predictor corresponds to a 〖(𝑒〗\^(𝛽_1 )−1)∗100% change in the odds of Y=1. In the current example, we could say that when Population increases by 1 person, the odds of there being a hospital in the zip code goes up by (1.001−1)∗100%=0.1%.
-
-What if 𝛽_1\<0 (i.e., there's a negative association between the dependent variable and the predictor)? In our example above, if 𝛽_1=−0.1, we could say that the odds of there being a hospital in a zip code changes (i.e., decreases) by a factor of 𝑒\^(𝛽_1 )=𝑒\^(−0.1)=0.9 as population increases by 1.
-
-What happens when 𝛽_1=0? Intuitively, it means that the predictor has no effect on the dependent variable. (Later we will see that this corresponds to an odds ratio of 𝑒\^0=1.)
-
-The higher the R-Squared, the better
-
-Unlike OLS regression, R-Squared cannot be interpreted as the % of variance explained by the model
-
-You can choose a cut-off value by looking at the histogram of ̂y_𝑖
-
-Many statisticians use a bunch of cut-off values for what's a relatively high and relatively low probability. These values are often:
-
-For now, we'll stick with a cutoff of 0.5
-
-Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate.
-
-Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate.
-
-ROC Curves
-
-A way to plot true positive rate (sensitivity) against false positive rate (i.e., 1 - specificity) A best cut-off value may be determined by optimizing sensitivity and specificity We can also use ROC curves to examine predictive quality of the model
-
-A couple different ways for identifying the probability cut-offs based on ROC Curves exist: Youden Index: A cut-off for which (Sensitivity + Specificity) is maximized A cut-off for which the ROC curve has the minimum distance from the upper left corner of the graph -- i.e., the point at which specificity = 1 and sensitivity = 1. This is just a different way of maximizing specificity and sensitivity We can implement this in R and get the optimal cut-off point and corresponding sensitivity and specificity
-
-Area under ROC Curve (AUC, which stands for Area Under Curve) is a measure of prediction accuracy of the model (how well a model predicts 1 responses as 1's and 0 responses as 0's). Higher AUCs mean that we can find a cut-off value for which both sensitivity and specificity of the model are relatively high. Possible values range between 0.5 (area under 45 degree line) and 1 (area of the entire box). A rough guide for classifying the accuracy: .90-1 = excellent .80-.90 = good .70-.80 = fair .60-.70 = poor .50-.60 = fail These might be somewhat conservative estimates, and there will be statisticians who will say that area \> .7 is just fine.
-
-Interpreting the AUC AUC may be interpreted as the probability that the model correctly ranks two randomly selected observations where one has 𝑦=1 and the other one has 𝑦=0. In other words, imagine that you randomly select 2 observations: Observation 1, for which 𝑦=1, and Observation 2, for which 𝑦=0. Recall that for each one of these observations, your logistic regression model estimates 𝑦̂=𝑝=𝑃(𝑦=1) The AUC may be interpreted as the probability that the 𝑦̂ for observation 1 (where 𝑦=1) will be higher than the 𝑦̂ for observation 2 (where 𝑦=0). An example: An AUC of .93397 means that, if you have 2 randomly selected zip codes, such that the first has a hospital and the second doesn't, 93.397% of the time the 𝑦̂ (i.e., the predicted probability of there being a hospital) in the first zip code will be higher than the 𝑦̂ in the second zip code.
 
 Similar to OLS, we can do cross-validation to determine a quality of the model. See following links for more information: K-Fold cross-validation in R: https://www.r-bloggers.com/evaluating-logistic-regression-models/ More on cross-validation in R: https://www.r-bloggers.com/predicting-creditability-using-logistic-regression-in-r-cross-validating-the-classifier-part-2-2/
 
