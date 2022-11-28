@@ -311,7 +311,11 @@ logit <- glm(drinking_d ~ fatal_or_m + overturned + cell_phone + speeding + aggr
              + pctbachmor + medhhinc, data = crash_data, family = "binomial")
 summary(logit)
 
-exp(cbind(OR = coef(logit), confint(logit)))
+```
+
+The following table indicates the odds ratio for each predictor. Odds is usually calculated as $# of desirable outcomes/# of undesirable outcomes$
+
+```{exp(cbind(OR = coef(logit), confint(logit)))}
 
 logitoutput <- summary(logit)
 logitcoeffs <- logitoutput$coefficients
@@ -328,17 +332,9 @@ finallogitoutput
 
     1.  Interpret the results. Be sure to comment on whether each predictor is significant, and interpret the odds ratio for each predictor.
 
-<!--writings-->
-
 -   
 
-    2.  State whether there is evidence of multicollinearity, and remind the reader how you're defining multicollinearity.
-
-<!--writings-->
-
--   
-
-    ii. Using the table on page 7, present the specificity, sensitivity and the misclassification rates for the different probability cut-offs. Indicate the cut-offs which yield the lowest/highest misclassification rates.
+    1.  Using the table on page 7, present the specificity, sensitivity and the misclassification rates for the different probability cut-offs. Indicate the cut-offs which yield the lowest/highest misclassification rates.
 
 ```{r sensitivity, specificity}
 #| tbl-cap: "Cross-Tabulations, Fit Binary"
