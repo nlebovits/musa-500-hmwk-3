@@ -373,8 +373,6 @@ CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, pr
 ```
 
 
-    iii. Present the ROC curve and comment on the optimal cut-off rate that was selected by minimizing the distance from the upper left corner of the ROC curve.
-
 Since the ROC curve can be used to plot true positive rate against false positive rate and determine the quality of the model, a ROC curve is plotted for our model. Given the ROC curve, the calculated optimal cut-off point is at probability of 0.06. This suggested cut-off point diverge from the 0.02 cut-off point observed from the table earlier. This difference may result from the fact that the previous table only aims to minimize mis-classification rate, while the optimal cut-off point here aims to maximizing both sensitivity and specificity. 
 
 
@@ -422,12 +420,12 @@ auc.perf@y.values
 ```
 
 
-Given the ROC curve as presented above, we then calculated the area under curve to further measure the accuracy of the model. 
+Given the ROC curve as presented above, we then calculated the area under curve to further measure the accuracy of the model. The calculated AUC is 0.64, suggesting that the model is relatively unsatisfactory. 
 
 
--   
+**Logistic Regression with Binary Predictors**
 
-    v.  Finally, present the results of the logistic regression with the binary predictors only (i.e., without PCTBACHMOR and MEDHHINC). 1. Compare the results of this regression with the results of the first regression: are there any predictors which are significant in the new model which weren't significant in the original one, or vice versa?
+The following table is the results from a logistic regression only with binary predictors (explanatory variables). The results suggest that **cell_phone** remains statistically insignificant in the new model, while other binary predictors remain significant.
 
 ```{r regression model2}
 
@@ -451,7 +449,7 @@ finallogitoutput2
 
 ```
 
-2.  Be sure to also present the Akaike Information Criterion (AIC) for both models and indicate which model is better.
+In addition, by comparing the Akaike Information Criterion (AIC) values, we can see that the models have almost identical AIC values, suggesting that they have similar quality. 
 
 ```{r AIC}
 
