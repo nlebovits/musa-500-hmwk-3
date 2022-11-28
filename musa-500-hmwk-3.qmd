@@ -104,7 +104,7 @@ In order to understand logistic regression, we must first review the concept of 
 
 Odds are similar to probability. However, while probability may be calculated as $\frac{\text{\# desirable outcomes}}{\text{\# possible outcomes}}$, odds are calculated as $\frac{\text{\# desirable outcomes}}{\text{\# undesirable outcomes}}$.
 
-![Technically, it's the *probability* of being murdered by a serial killer](https://www.smbc-comics.com/comics/1482164544-20161219.png){width=50%}
+![Technically, it's the *probability* of being murdered by a serial killer](https://www.smbc-comics.com/comics/1482164544-20161219.png){width="50%"}
 
 The log odds that $Y = 1$ (or the *logit*) are simply $ln(Odds(Y = 1))$. In other words, if $Y$ is our dependent variable and $X$ is our independent variable, a 1-unit increase in $X$ means that the odds that $Y=1$ go up by $e^\text{ln(Odds(Y = 1))}$.
 
@@ -151,38 +151,41 @@ Finally, in assessing the quality of our model, we can consider *specificity*, *
 
 Sensitivity (also called the true positive rate) measures the proportion of actual positives which are correctly identified as such (e.g., the percentage of sick people who are correctly identified as having the condition), and is complementary to the false negative rate. Specificity (also called the true negative rate) measures the proportion of negatives which are correctly identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition), and is complementary to the false positive rate. The misclassification rate is the proportion of the sum of false positives and false negatives out of the total number of observations in the sample.
 
-![False positives are dangerous, folks](https://www.smbc-comics.com/comics/1468070206-20160709.png){width=50%}
+![False positives are dangerous, folks](https://www.smbc-comics.com/comics/1468070206-20160709.png){width="50%"}
 
-A simple way of assessing model quality is to determine a cut-off value for the fitted values $\hat{y_i}$, which is equal to P(Y = 1) at each observation $i$. When the model performs well, observations where $Y = 1$ will have higher values of $\hat{y_i}$, and observations where $Y = 0$ will have lower values of $\hat{y_i}$. We can set a cut-off value, ranging between 0 and 1, for what constitutes a "high" versus a "low" value based on the distribution of our data. In practice, most statisticians use multiple values, e.g., 0.1, 0.2, 0.3 ... 0.7. 
+A simple way of assessing model quality is to determine a cut-off value for the fitted values $\hat{y_i}$, which is equal to P(Y = 1) at each observation $i$. When the model performs well, observations where $Y = 1$ will have higher values of $\hat{y_i}$, and observations where $Y = 0$ will have lower values of $\hat{y_i}$. We can set a cut-off value, ranging between 0 and 1, for what constitutes a "high" versus a "low" value based on the distribution of our data. In practice, most statisticians use multiple values, e.g., 0.1, 0.2, 0.3 ... 0.7.
 
-Ideally, we want to choose a cut-off value that will optimize sensitivity and specificity. Typically, we want to see a high true positive rate and a low false positive rate, although, depending on the specific case, it may be more important to minimize the false positive rate than to maximize the true positive rate, or vice versa. To this end, we can plot the true positive rate (sensitivity) against the false positive rate (specificity), as in Figure 1^[Source: https://en.wikipedia.org/wiki/Receiver_operating_characteristic]. This is known an ROC curve, and it offers us a few different options for identifying out probability cut-off:
+Ideally, we want to choose a cut-off value that will optimize sensitivity and specificity. Typically, we want to see a high true positive rate and a low false positive rate, although, depending on the specific case, it may be more important to minimize the false positive rate than to maximize the true positive rate, or vice versa. To this end, we can plot the true positive rate (sensitivity) against the false positive rate (specificity), as in Figure 1[^4]. This is known an ROC curve, and it offers us a few different options for identifying out probability cut-off:
 
- 1. The *Youden Index* is a cut-off for which the sum of sensitivity plus specificity is maximized
- 2. A cut-off for which the ROC curve has the minimum distance from the upper left corner of the graph, i.e., the point at which specificy = 1 and sensitivity = 1 (this can be implemented in R)
+[^4]: Source: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
+
+1.  The *Youden Index* is a cut-off for which the sum of sensitivity plus specificity is maximized
+2.  A cut-off for which the ROC curve has the minimum distance from the upper left corner of the graph, i.e., the point at which specificy = 1 and sensitivity = 1 (this can be implemented in R)
 
 In this assignment, we will be selecting our cut-off by taking the second approach and minimizing the distance of the curve from the upper left corner of the graph.
 
-![Figure 1: ROC Curve Example](https://raw.githubusercontent.com/nlebovits/musa-500-hmwk-3/main/Roc_curve.svg){width=50%}
+![Figure 1: ROC Curve Example](https://raw.githubusercontent.com/nlebovits/musa-500-hmwk-3/main/Roc_curve.svg){width="50%"}
 
 If we calculate the area under our ROC curve (the AUC), we can measure the prediction accuracy of the model. It is effectively the probability that the model correctly ranks two randomly selected observations where one has $Y = 1$ and the other has $Y = 0$, i.e., the probability that the $\hat{y}$ for the observation where one has $Y = 1$ is higher than the $\hat{y}$ where $Y = 0$. Higher AUCs mean that we can find a cut-off value for which both sensitivity and specificity are relatively high. The AUC varies from 0.5 to 1, and roughly correspond to the following accuracy levels:
 
- - .9 to 1.0 = excellent
- - .8 to .9 = good
- - .7 to .8 = fair (some statisticians say that any value \> .7 is good)
- - .6 to .7 = poor
- - .5 to .6 = fail
+-   .9 to 1.0 = excellent
+-   .8 to .9 = good
+-   .7 to .8 = fair (some statisticians say that any value \> .7 is good)
+-   .6 to .7 = poor
+-   .5 to .6 = fail
 
 ### Exploratory Analysis Prior to Regression
 
 Prior to running our regression model, we will run cross tabulations between the dependent variable DRINKING_D and each of the *binary* predictors (FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS). A cross tabulation will show us the proportional distribution of the variables. More importantly for our purposes, we can use a Chi-squared test to examine the association between the DV and each individual predictor variable. Here, the p-value is calculated based on the $\chi^2$ value and the degrees of freedom. If p \< 0.05, then the relationship between the dependent variable and the given predictor is significant. If we have a high $\chi^2$ and a p-value \< 0.05, we can therefore reject $H_0$, that the proportion of fatalities for crashes in which our predictor = 1 *is* the same as the proportion of fatalities for crashes in which our predictor = 0, in favor of $H_a$, that the proportion of fatalities for crashes in which our predictor = 1 is *not* the same as the proportion of fatalities for crashes in which our predictor = 0. This suggests a relationship between the variables.
 
-Additionally, we can compare the means of the *continuous* predictors in our model (PCTBACHMOR and MEDHHINC) by looking at independent sample t-tests. Here, $H_0$ is that the average values for our continuous predictor variable are *the same* for crashes that involve drunk drivers and crashes that don't. $H_a$ is that the average values for our continuous predictor variable are *different* for crashes that involve drunk drivers and crashes that don't. As before, a high value of the t-statistic, and a p-value lower than 0.05 suggest that there’s evidence to reject the null hypothesis in favor of the alternative.
+Additionally, we can compare the means of the *continuous* predictors in our model (PCTBACHMOR and MEDHHINC) by looking at independent sample t-tests. Here, $H_0$ is that the average values for our continuous predictor variable are *the same* for crashes that involve drunk drivers and crashes that don't. $H_a$ is that the average values for our continuous predictor variable are *different* for crashes that involve drunk drivers and crashes that don't. As before, a high value of the t-statistic, and a p-value lower than 0.05 suggest that there's evidence to reject the null hypothesis in favor of the alternative.
 
 ## Results
 
 ### Findings from Exploratory Analysis
 
 #### Distribution of Dependent Variable
+
 To begin our data exploration, we'll consider the distribution of our dependent variable. As we can see, from our prop table, crashes in which the driver were drunk account for only 5.7% of all 43,364 crashes between 2008 and 2012.
 
 ```{r dependent variable}
@@ -202,7 +205,9 @@ kable(DV_table, caption = "<center><span style='font-size:14px; color:black; fon
 ```
 
 #### Cross-Tabulations with Binary Predictors
+
 Next, we'll look at the cross-tabulations of our dependent variable with each of the binary predictors to evaluate whether the Chi-squared test indicates a statistically significant relationship.
+
 ```{r cross tabulation}
 #| tbl-cap: "Cross-Tabulations"
 #| column: screen-inset-shaded
@@ -262,7 +267,9 @@ contvars_df
 ```
 
 #### T-Tests for Continuous Predictors
+
 Discuss whether the t-test shows that there is a significant association between the dependent variable and each of the continuous predictors (i.e., can you reject the Null Hypothesis?).
+
 ```{r ttests}
 #| column: screen-inset-shaded
 #| layout-nrow: 1
@@ -272,9 +279,9 @@ t.test(crash_data$medhhinc~crash_data$drinking_d)
 
 ### Assumptions of Logistic Regression
 
--   
+-   Recalling from Method Section that there are three main assumptions for logistic regressions: 1) binary dependent variable, 2) independent observations, and 3) no severe multicollinearity. The dependent variable, DRINKING_D (whether drivers were drunk or not drunk) was binary, and the observations of each recorded car accident are independent of each other.
 
-    i.  In particular, be sure to present the matrix showing the pairwise Pearson correlations for all the binary and continuous predictors. 1. Comment on any potential limitations of using Pearson correlations to measure the associations between binary predictors.
+-   Multicollinearity usually refers to the situation when two or more predictors (explanatory variables) are strongly correlated with each other (r \> 0.9 or r \< -0.9), which signals a redundancy in including both predictors (in other words, adding the second one does not help improve the predictive power of the model). In the case of multicollinearity, we usually leave one predictor and take out the rest that are strongly correlated with that one predictor.
 
 ```{r multicollinearlity check}
 
@@ -288,9 +295,7 @@ corrplot(mc_test, method = "square",type = "lower",tl.cex = 0.5)
 
 ```
 
-2.  State whether there is evidence of multicollinearity, and remind the reader how you're defining multicollinearity.
-
-<!--writings-->
+-   To test the third assumption, whether there is multicollinearity between all predictors (both binary and continuous), we used the Pearson correlations and results are shown below in the form of matrix. Note that since Pearson is usually run based on the assumption of continuous (not categorical) variables, there are potential limitations of using Pearson correlations to measure the association between binary predictors, since Pearson cannot determine non-linear relationships.
 
 ### Logistic Regression Results
 
