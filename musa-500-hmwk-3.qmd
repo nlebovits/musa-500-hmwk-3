@@ -477,10 +477,12 @@ Similar to OLS, we can do cross-validation to determine a quality of the model. 
 
     iii. Is logistic regression appropriate here? In other words, would the modeling rare events methods proposed by Paul Allison be more appropriate here?
 
--   
-
+- 
     1.  Hint: look at the \# and % of cases with values of '1' for the dependent variable.
 
+
+table 2-1-1
+number: 2485,  % 0.057
 -   
 
     b)  What are some limitations of the analysis? Discuss.
