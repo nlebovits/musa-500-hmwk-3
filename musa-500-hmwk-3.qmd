@@ -461,11 +461,10 @@ Similar to OLS, we can do cross-validation to determine a quality of the model. 
 
 ## Discussion
 
-This projects use logistic regression as an alternative to OLS regression to look at relationships between whether drivers were drunk or not when car crashes happened and a group of predictors. From the models, we can see that all predictors, except for **cell_phone** and **pctbachmor**, (i.e., **fatal_or_m, overturned, speeding, aggressive, driver 1617, driver65plus, medhhinc**) are significantly associated with drivers drunk status. 
+This projects use logistic regression as an alternative to OLS regression to look at relationships between whether drivers were drunk or not when car crashes happened and a group of predictors. From the models, we can see that all predictors, except for **cell_phone** and **pctbachmor**, (i.e., **fatal_or_m, overturned, speeding, aggressive, driver 1617, driver65plus, medhhinc**) are significantly associated with drivers drunk status. The logistic regression model satisfies all assumptions needed, as shown in the previous section. 
 
-
-
-    ii. Are the results surprising? Discuss, and mention whether the variables you expect to be significant actually are significant, and if so, whether the relationships with the dependent variable are in the direction you would expect.
+Most results, including the significance of relationships and the direction of the relationships, align with expectations. For instance, we wouldn't expect whether drivers drank to be associated with the percentage of bachelor degree holders in the tracts of where the incidents happen, and it turns out to be not significant. Similarly, the use of cell phone is not expected to have a direct association with drunk drivers. On the other hand, the predictors related to age, **diver1617** and **driver65plus** are expected to be valid predictors, since teenage drivers are not legal to drink, and drivers older than 65 are less likely to drink due to health concerns. One result that is unexpected is the negative association between **aggressive** driving behaviors and whether the driver was drunk, as we would usually assume drunk drivers may perform more aggressively when driving. 
+ 
 
 **Rare Events Modeling in Logistic Regression**
 
