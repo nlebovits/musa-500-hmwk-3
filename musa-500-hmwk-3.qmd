@@ -375,11 +375,8 @@ CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, pr
 
     iii. Present the ROC curve and comment on the optimal cut-off rate that was selected by minimizing the distance from the upper left corner of the ROC curve.
 
-Since the ROC curve can be used to plot true positive rate against false positive rate and determine the quality of the model, a ROC curve is plotted for our model. 
-1.  Compare this cut-off rate with the optimal rate in 3.c.ii above
+Since the ROC curve can be used to plot true positive rate against false positive rate and determine the quality of the model, a ROC curve is plotted for our model. Given the ROC curve, the calculated optimal cut-off point is at probability of 0.06. This suggested cut-off point diverge from the 0.02 cut-off point observed from the table earlier. This difference may result from the fact that the previous table only aims to minimize mis-classification rate, while the optimal cut-off point here aims to maximizing both sensitivity and specificity. 
 
-
-a.  Keep in mind that in 3.c.ii, we're looking at minimum mis-classification rates, and here, we're looking at simultaneously minimizing both sensitivity and specificity.
 
 ```{r ROC}
 
@@ -414,10 +411,6 @@ print(opt.cut(roc.perf, pred))
 
 ```
 
--   
-
-
-Given the ROC curve as presented above, we then calculated the area under curve to further measure the accuracy of the model. 
 
 ```{r calculate AUC}
 
@@ -429,6 +422,7 @@ auc.perf@y.values
 ```
 
 
+Given the ROC curve as presented above, we then calculated the area under curve to further measure the accuracy of the model. 
 
 
 -   
