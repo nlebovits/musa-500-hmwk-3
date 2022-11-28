@@ -313,7 +313,8 @@ summary(logit)
 
 ```
 
-The following table indicates the odds ratio for each predictor. Odds is usually calculated as $# of desirable outcomes/# of undesirable outcomes$
+The following table indicates the odds ratio for each predictor. Odds is usually calculated as $# of desirable outcomes/# of undesirable outcomes$. For all statistically significant predictors, if the OR (Odds Ratio) value is higher than 0 (i.e.,**fatal_or_m**, **overturned**, **cell_phone**, **speeding**, and **medhhinc**  ), 1 unit increase in each predictor corresponds to a increase in the odds of the driver being drunk when accident happens; if the OR (Odds Ratio) value is lower than 0 (i.e.,**aggressive**, **driver1617**, **driver65plus**, and **pctbachmor**), 1 unit increase in each predictor corresponds to a increase in the odds of the driver being drunk when accident happens. 
+
 
 ```{exp(cbind(OR = coef(logit), confint(logit)))}
 
@@ -328,9 +329,9 @@ finallogitoutput
 
 ```
 
--   
 
     1.  Interpret the results. Be sure to comment on whether each predictor is significant, and interpret the odds ratio for each predictor.
+
 
 -   
 
