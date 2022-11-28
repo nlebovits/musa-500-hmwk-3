@@ -330,12 +330,13 @@ finallogitoutput
 ```
 
 
-    1.  Interpret the results. Be sure to comment on whether each predictor is significant, and interpret the odds ratio for each predictor.
+The following set of matrices indicate specificity, sensitivity, and classifications rates at different probability cut-offs (thresholds), respectively cutting off at probability of 0.02, 0.03, 0.05, 0.07, 0.08, 0.09, 0.1, 0.15, 0.2, and 0.5. 
 
-
--   
 
     1.  Using the table on page 7, present the specificity, sensitivity and the misclassification rates for the different probability cut-offs. Indicate the cut-offs which yield the lowest/highest misclassification rates.
+
+
+
 
 ```{r sensitivity, specificity}
 #| tbl-cap: "Cross-Tabulations, Fit Binary"
