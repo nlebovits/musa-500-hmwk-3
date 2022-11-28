@@ -283,6 +283,8 @@ t.test(crash_data$medhhinc~crash_data$drinking_d)
 
 -   Multicollinearity usually refers to the situation when two or more predictors (explanatory variables) are strongly correlated with each other (r \> 0.9 or r \< -0.9), which signals a redundancy in including both predictors (in other words, adding the second one does not help improve the predictive power of the model). In the case of multicollinearity, we usually leave one predictor and take out the rest that are strongly correlated with that one predictor.
 
+-   To test the third assumption, whether there is multicollinearity between all predictors (both binary and continuous), we used the Pearson correlations and results are shown below in the form of matrix. Note that since Pearson is usually run based on the assumption of continuous (not categorical) variables, there are potential limitations of using Pearson correlations to measure the association between binary predictors, since Pearson cannot determine non-linear relationships.
+
 ```{r multicollinearlity check}
 
 #3-a multicollinearlity test
@@ -295,13 +297,11 @@ corrplot(mc_test, method = "square",type = "lower",tl.cex = 0.5)
 
 ```
 
--   To test the third assumption, whether there is multicollinearity between all predictors (both binary and continuous), we used the Pearson correlations and results are shown below in the form of matrix. Note that since Pearson is usually run based on the assumption of continuous (not categorical) variables, there are potential limitations of using Pearson correlations to measure the association between binary predictors, since Pearson cannot determine non-linear relationships.
+-   Although **MEDHHINC** (the median household income) and **PCTBACHMOR** (percentage of bachelor degree in the census tract where accident happened) having relatively higher correlation (r = 0.477 \< 0.9, which does not qualify for multicollinearity), the correlation matrix indicates no severe multicollinearity across all predictors (all r satisfies -0.9 \< r \< 0.9, showing non-multicollinearity).
 
 ### Logistic Regression Results
 
--   
-
-    i.  First, present the results of the logistic regression with all predictors (FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC).
+-   The results of logistic regression with all predictors is shown below. All predictors, except for **CELL_PHONE** (whether drivers were using cell-phones) and **PCTBACHMOR** (percentage of bachelor degree in the census tract where accident happened), are statistically significantly associated with **drinking_d** (whether drivers were drunk).
 
 ```{r regression model}
 
