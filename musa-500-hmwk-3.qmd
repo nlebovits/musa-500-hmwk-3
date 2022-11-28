@@ -461,28 +461,18 @@ Similar to OLS, we can do cross-validation to determine a quality of the model. 
 
 ## Discussion
 
--   
+This projects use logistic regression as an alternative to OLS regression to look at relationships between whether drivers were drunk or not when car crashes happened and a group of predictors. From the models, we can see that all predictors, except for **cell_phone** and **pctbachmor**, (i.e., **fatal_or_m, overturned, speeding, aggressive, driver 1617, driver65plus, medhhinc**) are significantly associated with drivers drunk status. 
 
-    a)  In a couple sentences, recap what you did in the paper, and your findings.
 
--   
-
-    i.  Which variables are strong predictors of crashes that involve drunk driving? Which variables aren't associated with the dependent variable?
-
--   
 
     ii. Are the results surprising? Discuss, and mention whether the variables you expect to be significant actually are significant, and if so, whether the relationships with the dependent variable are in the direction you would expect.
 
--   
+**Rare Events Modeling in Logistic Regression**
 
-    iii. Is logistic regression appropriate here? In other words, would the modeling rare events methods proposed by Paul Allison be more appropriate here?
+To judge whether logistic regression is appropriate here, we need to examine the number of cases, especially the number of the rarer outcome of the two -- in this cases, drivers that were drunk at the time of crashes are a lot less than those who were not drunk. If there is a small sample bias here, we can use Paul Allison proposed methods for modeling rare events, similar to penalized likelihood, for reducing small-sample biases in Maximum likelihood estimation. 
 
-- 
-    1.  Hint: look at the \# and % of cases with values of '1' for the dependent variable.
+The question is then whether the number of drunk drivers should be considered small sample. The answer is uncertain. According to Table 2-1-1, we have 2,485 observations for drivers who were drunk at the time of incidents, versus 40,879 observations for drivers who were not drunk. Although 2,485 seems like a reasonably sized group, it only take 0.057% of all observations. Therefore, there might be a need to adopt Paul Allison's methods for modeling rare events instead of just using logistic regression. 
 
-
-table 2-1-1
-number: 2485,  % 0.057
 -   
 
     b)  What are some limitations of the analysis? Discuss.
