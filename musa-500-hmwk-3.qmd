@@ -32,7 +32,7 @@ library(purrr)
 library(kableExtra)
 library(caret)
 library(corrplot)
-# install.packages("prediction")
+#install.packages("prediction")
 library(prediction)
 
 #ggthemr("pale") #set global ggplot theme
@@ -44,7 +44,9 @@ library(gmodels)
 
 library(ROCR)
 
+#install.packages("crosstable")
 library(crosstable)
+#install.packages("flextable")
 library(flextable)
 
 #knitr::opts_knit$set(root.dir = "C:/Users/Nissim/Desktop/Fall 2022/Spat Stats/Homeworks/musa-500-hmwk-3")
@@ -52,7 +54,6 @@ library(flextable)
 #import data
 crash_data = read.csv("https://github.com/kmu973/tempDataRepo/raw/main/Logistic%20Regression%20Data.csv") |>
               clean_names()
-
 
 ```
 
@@ -65,8 +66,6 @@ The goal of the current assignment is to identify predictors of accidents relate
 Because the crash data are geocoded, it is possible to spatially join the data to the 2000 Census block group level data set that was used for the two previous homework assignments. After the spatial join, each crash point contains the median household income and the percent of individuals with at least a bachelor's degree in the block group where the crash took place.
 
 Even though the original data set has a total of 53,260 car crashes, for the sake of this assignment, we remove the 9,896 crash locations which took place in non-residential block groups, where median household income and vacancy rates are 0, from the data set. The final data set contains the 43,364 crashes that took place in Philadelphia's residential block groups. Here, we will be regressing the binary dependent variable, DRINKING_D, on the following binary and continuous predictors: FATAL_OR_M, OVERTURNED, CELL_PHONE, SPEEDING, AGGRESSIVE, DRIVER1617, DRIVER65PLUS, PCTBACHMOR, and MEDHHINC.
-
-### Tools
 
 ## Methods
 
@@ -197,7 +196,7 @@ DV_table <- left_join(as.data.frame(drinking_d_table), as.data.frame(prop.table(
                           Var1 == 1 ~ "Drunk"),
          Freq.y = round(Freq.y, 3))
 
-kable(DV_table, caption = "<center><span style='font-size:14px; color:black; font-family: Arial'>Table 2-1-1. Tabulation of the Dependent Variable</span></center>",
+kable(DV_table, caption = "<center><span style='font-size:14px; color:black; font-family: Arial'>Table 1. Tabulation of the Dependent Variable</span></center>",
       col.names = c("Driver Status", "Count", "Proportion"), align = "c") %>% 
     kable_minimal(full_width = T, html_font = "Arial", font_size = 14) %>%
     row_spec(0:2, extra_css = "line-height: 30px")
@@ -253,8 +252,6 @@ As we can see based on these cross-tabulations, the Chi-squared test shows a hig
 
 #### Comparing Means of Continuous Variables
 
-    iii. Present the means of the continuous predictors for both values of the dependent variable (table on p. 5). 1. In the table, add an extra column which presents the results of the independent samples t-test (you may present the p-value only, or the t-statistic, the degrees of freedom and the p-value).
-
 ```{r means by group}
 means = c(tapply(crash_data$pctbachmor, crash_data$drinking_d, mean), tapply(crash_data$medhhinc, crash_data$drinking_d, mean))
 sds = c(tapply(crash_data$pctbachmor, crash_data$drinking_d, sd), tapply(crash_data$medhhinc, crash_data$drinking_d, sd))
@@ -264,11 +261,17 @@ contvars_df = as.data.frame(rbind(means, sds))
 colnames(contvars_df) = c("PCTBACHMOR 0", "PCTBACHMOR 1", "MEDHHINC 0", "MEDHHINC 1")
 
 contvars_df
+
+kable(contvars_df, caption = "<center><span style='font-size:14px; color:black; font-family: Arial'>Comparing Means of Continuous Variables</span></center>", align = "c") %>% 
+    kable_minimal(full_width = T, html_font = "Arial", font_size = 14) %>%
+    row_spec(0:2, extra_css = "line-height: 30px")
+
+
 ```
 
 #### T-Tests for Continuous Predictors
 
-Discuss whether the t-test shows that there is a significant association between the dependent variable and each of the continuous predictors (i.e., can you reject the Null Hypothesis?).
+T-test shows us high p-value which implies that we can't reject the Null Hypothesis, the average values for our continuous predictor variable are *the same* for crashes that involve drunk drivers and crashes that don't.
 
 ```{r ttests}
 #| column: screen-inset-shaded
@@ -279,11 +282,11 @@ t.test(crash_data$medhhinc~crash_data$drinking_d)
 
 ### Assumptions of Logistic Regression
 
--   Recalling from Method Section that there are three main assumptions for logistic regressions: 1) binary dependent variable, 2) independent observations, and 3) no severe multicollinearity. The dependent variable, DRINKING_D (whether drivers were drunk or not drunk) was binary, and the observations of each recorded car accident are independent of each other.
+ Recalling from Method Section that there are three main assumptions for logistic regressions: 1) binary dependent variable, 2) independent observations, and 3) no severe multicollinearity. The dependent variable, DRINKING_D (whether drivers were drunk or not drunk) was binary, and the observations of each recorded car accident are independent of each other.
 
--   Multicollinearity usually refers to the situation when two or more predictors (explanatory variables) are strongly correlated with each other (r \> 0.9 or r \< -0.9), which signals a redundancy in including both predictors (in other words, adding the second one does not help improve the predictive power of the model). In the case of multicollinearity, we usually leave one predictor and take out the rest that are strongly correlated with that one predictor.
+ Multicollinearity usually refers to the situation when two or more predictors (explanatory variables) are strongly correlated with each other (r \> 0.9 or r \< -0.9), which signals a redundancy in including both predictors (in other words, adding the second one does not help improve the predictive power of the model). In the case of multicollinearity, we usually leave one predictor and take out the rest that are strongly correlated with that one predictor.
 
--   To test the third assumption, whether there is multicollinearity between all predictors (both binary and continuous), we used the Pearson correlations and results are shown below in the form of matrix. Note that since Pearson is usually run based on the assumption of continuous (not categorical) variables, there are potential limitations of using Pearson correlations to measure the association between binary predictors, since Pearson cannot determine non-linear relationships.
+ To test the third assumption, whether there is multicollinearity between all predictors (both binary and continuous), we used the Pearson correlations and results are shown below in the form of matrix. Note that since Pearson is usually run based on the assumption of continuous (not categorical) variables, there are potential limitations of using Pearson correlations to measure the association between binary predictors, since Pearson cannot determine non-linear relationships.
 
 ```{r multicollinearlity check}
 
@@ -297,11 +300,11 @@ corrplot(mc_test, method = "square",type = "lower",tl.cex = 0.5)
 
 ```
 
--   Although **MEDHHINC** (the median household income) and **PCTBACHMOR** (percentage of bachelor degree in the census tract where accident happened) having relatively higher correlation (r = 0.477 \< 0.9, which does not qualify for multicollinearity), the correlation matrix indicates no severe multicollinearity across all predictors (all r satisfies -0.9 \< r \< 0.9, showing non-multicollinearity).
+ Although **MEDHHINC** (the median household income) and **PCTBACHMOR** (percentage of bachelor degree in the census tract where accident happened) having relatively higher correlation (r = 0.477 \< 0.9, which does not qualify for multicollinearity), the correlation matrix indicates no severe multicollinearity across all predictors (all r satisfies -0.9 \< r \< 0.9, showing non-multicollinearity).
 
 ### Logistic Regression Results
 
--   The results of logistic regression with all predictors is shown below. All predictors, except for **CELL_PHONE** (whether drivers were using cell-phones) and **PCTBACHMOR** (percentage of bachelor degree in the census tract where accident happened), are statistically significantly associated with **drinking_d** (whether drivers were drunk).
+ The results of logistic regression with all predictors is shown below. All predictors, except for **CELL_PHONE** (whether drivers were using cell-phones) and **PCTBACHMOR** (percentage of bachelor degree in the census tract where accident happened), are statistically significantly associated with **drinking_d** (whether drivers were drunk).
 
 ```{r regression model}
 
@@ -313,10 +316,12 @@ summary(logit)
 
 ```
 
-The following table indicates the odds ratio for each predictor. Odds is usually calculated as $# of desirable outcomes/# of undesirable outcomes$. For all statistically significant predictors, if the OR (Odds Ratio) value is higher than 0 (i.e.,**fatal_or_m**, **overturned**, **cell_phone**, **speeding**, and **medhhinc**  ), 1 unit increase in each predictor corresponds to a increase in the odds of the driver being drunk when accident happens; if the OR (Odds Ratio) value is lower than 0 (i.e.,**aggressive**, **driver1617**, **driver65plus**, and **pctbachmor**), 1 unit increase in each predictor corresponds to a increase in the odds of the driver being drunk when accident happens. 
+ The following table indicates the odds ratio for each predictor. Odds is usually calculated as $# of desirable outcomes/# of undesirable outcomes$. For all statistically significant predictors, if the OR (Odds Ratio) value is higher than 0 (i.e.,**fatal_or_m**, **overturned**, **cell_phone**, **speeding**, and **medhhinc**  ), 1 unit increase in each predictor corresponds to a increase in the odds of the driver being drunk when accident happens; if the OR (Odds Ratio) value is lower than 0 (i.e.,**aggressive**, **driver1617**, **driver65plus**, and **pctbachmor**), 1 unit increase in each predictor corresponds to a increase in the odds of the driver being drunk when accident happens. 
 
 
-```{exp(cbind(OR = coef(logit), confint(logit)))}
+```{r regression model}
+
+exp(cbind(OR = coef(logit), confint(logit)))
 
 logitoutput <- summary(logit)
 logitcoeffs <- logitoutput$coefficients
@@ -331,7 +336,6 @@ finallogitoutput
 
 
 The following set of matrices indicate specificity, sensitivity at different probability cut-offs (thresholds), respectively cutting off at probability of 0.02, 0.03, 0.05, 0.07, 0.08, 0.09, 0.1, 0.15, 0.2, and 0.5. The values are then encoded into a table presenting not only specificity and sensitivity but also mis-classifications rate. Based on the table, the cut-off value that has the lowest mis-classification rate is 0.02 and the one corresponding to the highest mis-classification rate is 0.5.
-
 
 ```{r sensitivity, specificity}
 #| tbl-cap: "Cross-Tabulations, Fit Binary"
@@ -371,6 +375,8 @@ fit.binary = (fit>=0.5)
 CrossTable(fit.binary, crash_data$drinking_d, prop.r = FALSE, prop.t = FALSE, prop.chisq = FALSE)
 
 ```
+
+
 
 
 Since the ROC curve can be used to plot true positive rate against false positive rate and determine the quality of the model, a ROC curve is plotted for our model. Given the ROC curve, the calculated optimal cut-off point is at probability of 0.06. This suggested cut-off point diverge from the 0.02 cut-off point observed from the table earlier. This difference may result from the fact that the previous table only aims to minimize mis-classification rate, while the optimal cut-off point here aims to maximizing both sensitivity and specificity. 
@@ -422,7 +428,6 @@ auc.perf@y.values
 
 Given the ROC curve as presented above, we then calculated the area under curve to further measure the accuracy of the model. The calculated AUC is 0.64, suggesting that the model is relatively unsatisfactory. 
 
-
 **Logistic Regression with Binary Predictors**
 
 The following table is the results from a logistic regression only with binary predictors (explanatory variables). The results suggest that **cell_phone** remains statistically insignificant in the new model, while other binary predictors remain significant.
@@ -465,17 +470,12 @@ This projects use logistic regression as an alternative to OLS regression to loo
 
 Most results, including the significance of relationships and the direction of the relationships, align with expectations. For instance, we wouldn't expect whether drivers drank to be associated with the percentage of bachelor degree holders in the tracts of where the incidents happen, and it turns out to be not significant. Similarly, the use of cell phone is not expected to have a direct association with drunk drivers. On the other hand, the predictors related to age, **diver1617** and **driver65plus** are expected to be valid predictors, since teenage drivers are not legal to drink, and drivers older than 65 are less likely to drink due to health concerns. One result that is unexpected is the negative association between **aggressive** driving behaviors and whether the driver was drunk, as we would usually assume drunk drivers may perform more aggressively when driving. 
  
-
 **Rare Events Modeling in Logistic Regression**
 
 To judge whether logistic regression is appropriate here, we need to examine the number of cases, especially the number of the rarer outcome of the two -- in this cases, drivers that were drunk at the time of crashes are a lot less than those who were not drunk. If there is a small sample bias here, we can use Paul Allison proposed methods for modeling rare events, similar to penalized likelihood, for reducing small-sample biases in Maximum likelihood estimation. 
 
-The question is then whether the number of drunk drivers should be considered small sample. The answer is uncertain. According to Table 2-1-1, we have 2,485 observations for drivers who were drunk at the time of incidents, versus 40,879 observations for drivers who were not drunk. Although 2,485 seems like a reasonably sized group, it only take 0.057% of all observations. Therefore, there might be a need to adopt Paul Allison's methods for modeling rare events instead of just using logistic regression. 
+The question is then whether the number of drunk drivers should be considered small sample. The answer is uncertain. According to Table 1, we have 2,485 observations for drivers who were drunk at the time of incidents, versus 40,879 observations for drivers who were not drunk. Although 2,485 seems like a reasonably sized group, it only take 5.7% of all observations. Therefore, there might be a need to adopt Paul Allison's methods for modeling rare events instead of just using logistic regression. 
 
--   
+**Limitations**
 
-    b)  What are some limitations of the analysis? Discuss.
-
-### Recap
-
-### Limitations
+In this Analysis we've only leveraged given independent variables, to improve our model, we should've to spend more time in exploring other independent variables. It might help us to get larger value of AUC than that of 0.64 in current model.
